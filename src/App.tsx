@@ -16,15 +16,15 @@ function App() {
             <Route path="about" element={<Title>{'About'}</Title>}></Route>
             <Route path="*" element={<Title>{'Page not found'}</Title>}></Route>
           </Routes>
+          <nav className="navigation">
+            <NavLink to="/" className={'navigation__item'}>
+              Home
+            </NavLink>
+            <NavLink to="about" className={'navigation__item'}>
+              About Us
+            </NavLink>
+          </nav>
         </header>
-        <nav className="navigation">
-          <NavLink to="/" className={'navigation__item'}>
-            Home
-          </NavLink>
-          <NavLink to="about" className={'navigation__item'}>
-            About Us
-          </NavLink>
-        </nav>
         <main className="main"></main>
       </BrowserRouter>
       <Footer>{'2023'}</Footer>
