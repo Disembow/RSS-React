@@ -1,0 +1,10 @@
+.navigation {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 1rem;
+}
+
+.navigation__item {
+  color: tomato;
+}
