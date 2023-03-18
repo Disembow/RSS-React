@@ -27,7 +27,7 @@ function App() {
         </header>
         <main className="main"></main>
       </BrowserRouter>
-      <Footer>{'2023'}</Footer>
+      <Footer />
     </>
   );
 }
