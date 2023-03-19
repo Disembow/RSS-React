@@ -1,5 +1,6 @@
 import React from 'react';
 import Title from '../header/Title';
+import Cards from './Cards';
 import './Main.css';
 
 type TState = {
@@ -40,6 +41,7 @@ export default class Main extends React.Component {
           />
           <span className="search__icon"></span>
         </div>
+        <Cards />
       </main>
     );
   }
