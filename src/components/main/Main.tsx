@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from './Title';
+import Title from '../header/Title';
 import './Main.css';
 
 type TState = {
@@ -10,14 +10,17 @@ export default class Main extends React.Component {
   state: TState = { input: localStorage.getItem('RSTaskMessage') || '' };
 
   componentWillUnmount(): void {
-    localStorage.setItem('RSTaskMessage', JSON.stringify(JSON.parse(this.state.input)));
+    if (this.state.input === '') {
+      localStorage.setItem('RSTaskMessage', '');
+    } else {
+      localStorage.setItem('RSTaskMessage', JSON.stringify(JSON.parse(this.state.input)));
+    }
   }
 
-  handleInputValue(e: React.ChangeEvent<HTMLInputElement>): void {
+  handleInputValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     this.setState({ input: e.target.value });
-    console.log(e.target.value);
-  }
+  };
 
   getLSData(): string {
     return this.state.input ? JSON.parse(this.state.input) : '';

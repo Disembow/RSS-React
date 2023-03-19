@@ -1,27 +1,8 @@
 import React from 'react';
-import {
-  createBrowserRouter,
-  Route,
-  createRoutesFromElements,
-  RouterProvider,
-} from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import './App.css';
-
-// Components
-import Title from './components/Title';
-import Main from './components/Main';
-import Footer from './components/Footer';
-import RootLayout from './components/layouts/RootLayout';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<Main />}></Route>
-      <Route path="about" element={<Title>{'About'}</Title>}></Route>
-      <Route path="*" element={<Title>{'Page not found'}</Title>}></Route>
-    </Route>
-  )
-);
+import Footer from './components/footer/Footer';
+import router from './components/layouts/Router';
 
 function App() {
   return (

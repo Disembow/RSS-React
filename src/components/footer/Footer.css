@@ -8,12 +8,12 @@
 }
 
 .footer__github {
-  background: no-repeat url('../assets/github-logo.svg');
+  background: no-repeat url('../../assets/github-logo.svg');
   width: 2rem;
 }
 
 .footer__rss {
-  background: no-repeat url('../assets/rs_school_js.svg');
+  background: no-repeat url('../../assets/rs_school_js.svg');
   width: 5rem;
 }
 
