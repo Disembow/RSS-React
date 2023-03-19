@@ -14,9 +14,7 @@ export default function RootLayout() {
           </NavLink>
         </nav>
       </header>
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
     </div>
   );
 }
