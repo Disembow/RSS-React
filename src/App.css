@@ -13,11 +13,16 @@
   margin: 1rem;
 }
 
+.active {
+  background-color: #f4f8ec;
+  font-weight: 600;
+}
+
 .navigation__item {
   width: 6rem;
   height: 1.5rem;
   border-radius: 1rem;
-  border: 2px solid orange;
+  border-bottom: 3px solid #e6704b;
   padding: 0.1rem;
   text-align: center;
   transition: linear 0.2s;
