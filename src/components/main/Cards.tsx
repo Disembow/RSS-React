@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Cards.css';
 import { TProps } from '../../types/props-types';
 import music from '../../data/data';
+import CardsInfoRow from './CardsInfo';
 
 export default class Cards extends Component {
   ListItem(props: TProps) {
@@ -13,30 +14,12 @@ export default class Cards extends Component {
             <img className="card__image" src={e.cover} alt={e.album}></img>
           </div>
           <div className="card__info">
-            <p className="card-info__row">
-              <span className="card-info__title">Artist: </span>
-              <span className="card-info__item">{e.artist}</span>
-            </p>
-            <p className="card-info__row">
-              <span className="card-info__title">Genre: </span>
-              <span className="card-info__item">{e.genre}</span>
-            </p>
-            <p className="card-info__row">
-              <span className="card-info__title">Release: </span>
-              <span className="card-info__item">{e.year}</span>
-            </p>
-            <p className="card-info__row">
-              <span className="card-info__title">Album: </span>
-              <span className="card-info__item">{e.album}</span>
-            </p>
-            <p className="card-info__row">
-              <span className="card-info__title">Tracks: </span>
-              <span className="card-info__item">{e.tracks}</span>
-            </p>
-            <p className="card-info__row">
-              <span className="card-info__title">Rating: </span>
-              <span className="card-info__item">{e.rating}</span>
-            </p>
+            <CardsInfoRow title="Artist: " info={e.artist} />
+            <CardsInfoRow title="Genre" info={e.genre} />
+            <CardsInfoRow title="Release" info={e.year} />
+            <CardsInfoRow title="Album" info={e.album} />
+            <CardsInfoRow title="Tracks" info={e.tracks} />
+            <CardsInfoRow title="Rating" info={e.rating} />
           </div>
         </li>
       );
