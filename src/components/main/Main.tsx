@@ -14,7 +14,7 @@ export default class Main extends React.Component {
     if (this.state.input === '') {
       localStorage.setItem('RSTaskMessage', '');
     } else {
-      localStorage.setItem('RSTaskMessage', JSON.stringify(JSON.parse(this.state.input)));
+      localStorage.setItem('RSTaskMessage', this.state.input.toString());
     }
   }
 
@@ -24,7 +24,9 @@ export default class Main extends React.Component {
   };
 
   getLSData(): string {
-    return this.state.input ? JSON.parse(this.state.input) : '';
+    // return this.state.input ? JSON.parse(this.state.input) : '';
+    console.log(this.state.input);
+    return this.state.input ? this.state.input : '';
   }
 
   render() {
