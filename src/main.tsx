@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './main.css';
+import './main.scss';
 
 const root: HTMLDivElement | null = document.querySelector('#root');
 if (root)

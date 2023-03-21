@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import Footer from './components/footer/Footer';
 import router from './components/layouts/Router';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 // import { TProps } from 'types/props-types';
-import './Footer.css';
+import './Footer.scss';
 
 export default function Footer() {
   return (

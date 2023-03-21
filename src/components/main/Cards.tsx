@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Cards.css';
+import './Cards.scss';
 import { TProps } from '../../types/props-types';
 import music from '../../data/data';
 import CardsInfoRow from './CardsInfo';

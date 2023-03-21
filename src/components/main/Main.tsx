@@ -1,7 +1,7 @@
 import React from 'react';
 import Title from '../header/Title';
 import Cards from './Cards';
-import './Main.css';
+import './Main.scss';
 
 type TState = {
   input: string;
