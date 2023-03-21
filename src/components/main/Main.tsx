@@ -38,8 +38,9 @@ export default class Main extends React.Component {
             placeholder="Search"
             value={this.getLSData()}
             onChange={this.handleInputValue}
+            data-testid="main-search-bar"
           />
-          <span className="search__icon"></span>
+          <span className="search__icon" data-testid="main-search-icon"></span>
         </div>
         <Cards />
       </main>
