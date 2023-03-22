@@ -24,7 +24,11 @@ export default class Cards extends Component {
         </li>
       );
     });
-    return <ul className="cards__wrapper">{items}</ul>;
+    return (
+      <ul className="cards__wrapper" data-testid="main-cards-list">
+        {items}
+      </ul>
+    );
   }
 
   render() {

@@ -5,7 +5,7 @@ import './Footer.scss';
 export default function Footer() {
   return (
     <>
-      <footer className="footer">
+      <footer className="footer" data-testid="footer">
         <a className="footer__github" href="https://github.com/Disembow">
           {' '}
         </a>

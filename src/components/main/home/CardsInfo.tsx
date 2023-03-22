@@ -1,5 +1,5 @@
 import React from 'react';
-import { TCardInfo } from '../../types/props-types';
+import { TCardInfo } from '../../../types/props-types';
 
 export default function CardsInfoRow(props: TCardInfo) {
   return (
