@@ -9,6 +9,9 @@ export default function RootLayout() {
           <NavLink to="/" className={'navigation__item'}>
             Home
           </NavLink>
+          <NavLink to="forms" className={'navigation__item'}>
+            Forms
+          </NavLink>
           <NavLink to="about" className={'navigation__item'}>
             About Us
           </NavLink>

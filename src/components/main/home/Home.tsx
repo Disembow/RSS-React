@@ -1,13 +1,13 @@
 import React from 'react';
-import Title from '../header/Title';
+import Title from '../../header/Title';
 import Cards from './Cards';
-import './Main.scss';
+import './Home.scss';
 
 type TState = {
   input: string;
 };
 
-export default class Main extends React.Component {
+export default class Home extends React.Component {
   state: TState = { input: localStorage.getItem('RSTaskMessage') || '' };
 
   componentWillUnmount(): void {
