@@ -1,9 +1,10 @@
 import React, { createRef, FormEvent, RefObject } from 'react';
 import { TProps } from '../../../types/props-types';
 import Option from './Option';
+import imageDefault from '../../../assets/image_default.webp';
 
 type TState = {
-  radio: string;
+  [key: string]: string | boolean;
 };
 export default class Input extends React.Component {
   inputName: RefObject<HTMLInputElement>;
@@ -11,6 +12,8 @@ export default class Input extends React.Component {
   inputDate: RefObject<HTMLInputElement>;
   selector: RefObject<HTMLSelectElement>;
   checkbox: RefObject<HTMLInputElement>;
+  imageInput: RefObject<HTMLInputElement>;
+  imagePreview: RefObject<HTMLImageElement>;
   defaultDeliveryDate: string;
 
   state: TState;
@@ -20,16 +23,26 @@ export default class Input extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
+    this.handleImages = this.handleImages.bind(this);
 
     this.inputName = createRef();
     this.inputSecName = createRef();
     this.inputDate = createRef();
     this.selector = createRef();
     this.checkbox = createRef();
+    this.imageInput = createRef();
+    this.imagePreview = createRef();
     this.defaultDeliveryDate = new Date().toISOString().slice(0, 10);
 
     this.state = {
+      firstName: '',
+      lastName: '',
+      dateOfDelivery: '',
+      postService: '',
+      emailNotification: false,
+      paymentMethod: '',
       radio: '',
+      imagePreviewLink: '',
     };
   }
 
@@ -56,6 +69,7 @@ export default class Input extends React.Component {
     console.log('Post service: ' + this.selector.current?.value.toUpperCase());
     console.log('Checkbox: ' + this.checkbox.current?.checked);
     console.log('Sex: ' + this.state.radio);
+    console.log('Image: ' + this.imagePreview.current?.alt);
     console.groupEnd();
   }
 
@@ -139,10 +153,47 @@ export default class Input extends React.Component {
           <input className="form__checkbox" type="radio" value="Other" name="gender" /> Other
         </div>
 
+        <div className="form__item">
+          <label className="form__label" htmlFor="avatar">
+            Upload your image:
+          </label>
+          <input type="file" name="avatar" ref={this.imageInput} onChange={this.handleImages} />
+        </div>
+
+        <div className="image-preview__wrapper">
+          <img
+            className="image-preview__item"
+            src={imageDefault}
+            ref={this.imagePreview}
+            alt="input file preview"
+          />
+        </div>
+
         <button className="button button__submit" type="submit">
           Submit
         </button>
       </form>
     );
+  }
+
+  handleImages(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    const file = e.target.files?.[0];
+    const reader = new FileReader();
+
+    if (file instanceof File) {
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        if (this.imagePreview.current) {
+          this.imagePreview.current.src = reader.result as string;
+          this.setState({ imagePreviewLink: reader.result });
+        }
+      };
+
+      reader.onerror = () => {
+        console.log(reader.error);
+      };
+    }
   }
 }

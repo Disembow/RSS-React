@@ -65,3 +65,20 @@
     cursor: auto;
   }
 }
+
+.image-preview {
+  &__wrapper {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  &__item {
+    width: 10rem;
+    height: 10rem;
+  }
+  &__text {
+    color: grey;
+    text-align: center;
+  }
+}
