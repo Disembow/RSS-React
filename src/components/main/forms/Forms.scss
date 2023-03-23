@@ -1,0 +1,63 @@
+@use '../../../styles' as *;
+
+.order__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  width: 30rem;
+}
+
+.form {
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    width: 10rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $primaryColor1;
+  }
+
+  &__checkbox {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid $borderColor1;
+    border-radius: 0.5rem;
+    &:checked {
+      background: $borderColor1;
+    }
+  }
+}
+
+.button {
+  font-size: 1rem;
+  font-weight: 700;
+  height: 1.8rem;
+  width: 10rem;
+  background: $primaryColor2;
+  border: 1px solid $borderColor1;
+  border-radius: 1.2rem;
+  color: $primaryColor1;
+  cursor: pointer;
+
+  &:hover {
+    background: $primaryColor3;
+    color: $primaryColor2;
+  }
+
+  &:active {
+    background: $borderColor1;
+  }
+
+  &:disabled {
+    background-color: $buttonDisableBG;
+    cursor: auto;
+  }
+}

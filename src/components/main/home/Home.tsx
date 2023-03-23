@@ -24,8 +24,6 @@ export default class Home extends React.Component {
   };
 
   getLSData(): string {
-    // return this.state.input ? JSON.parse(this.state.input) : '';
-    console.log(this.state.input);
     return this.state.input ? this.state.input : '';
   }
 

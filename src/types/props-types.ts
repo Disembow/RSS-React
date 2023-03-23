@@ -1,7 +1,7 @@
 export type TProps = {
   children?: string;
   database?: TMusic;
-  value?: TMusic;
+  value?: TMusic | string;
 };
 
 export type TCardInfo = {
