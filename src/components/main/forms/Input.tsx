@@ -2,6 +2,7 @@ import React, { createRef, FormEvent, RefObject } from 'react';
 import { TProps } from '../../../types/props-types';
 import Option from './Option';
 import imageDefault from '../../../assets/image_default.webp';
+import Button from './Button';
 
 type TState = {
   [key: string]: string | boolean;
@@ -21,6 +22,7 @@ export default class Input extends React.Component {
   constructor(props: TProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDataChange = this.handleDataChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
     this.handleImages = this.handleImages.bind(this);
@@ -46,20 +48,6 @@ export default class Input extends React.Component {
     };
   }
 
-  handleDataChange(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    console.log(e.target.value);
-  }
-
-  handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    let status: boolean = e.target.checked;
-    status ? (status = false) : (status = true);
-  };
-
-  handleRadio(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ radio: e.target.value });
-  }
-
   handleSubmit(e: FormEvent) {
     e.preventDefault();
     console.group('On form submit');
@@ -71,6 +59,42 @@ export default class Input extends React.Component {
     console.log('Sex: ' + this.state.radio);
     console.log('Image: ' + this.imagePreview.current?.alt);
     console.groupEnd();
+  }
+
+  handleDataChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    console.log(e.target.value);
+    this.setState({ dateOfDelivery: e.target.value });
+  }
+
+  handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    let status: boolean = e.target.checked;
+    status ? (status = false) : (status = true);
+  };
+
+  handleRadio(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ radio: e.target.value });
+  }
+
+  handleImages(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    const file = e.target.files?.[0];
+    const reader = new FileReader();
+
+    if (file instanceof File) {
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        if (this.imagePreview.current) {
+          this.imagePreview.current.src = reader.result as string;
+          this.setState({ imagePreviewLink: reader.result });
+        }
+      };
+
+      reader.onerror = () => {
+        console.log(reader.error);
+      };
+    }
   }
 
   render() {
@@ -157,7 +181,13 @@ export default class Input extends React.Component {
           <label className="form__label" htmlFor="avatar">
             Upload your image:
           </label>
-          <input type="file" name="avatar" ref={this.imageInput} onChange={this.handleImages} />
+          <input
+            className="input__file"
+            type="file"
+            name="avatar"
+            ref={this.imageInput}
+            onChange={this.handleImages}
+          />
         </div>
 
         <div className="image-preview__wrapper">
@@ -169,31 +199,8 @@ export default class Input extends React.Component {
           />
         </div>
 
-        <button className="button button__submit" type="submit">
-          Submit
-        </button>
+        <Button>Submit</Button>
       </form>
     );
-  }
-
-  handleImages(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const file = e.target.files?.[0];
-    const reader = new FileReader();
-
-    if (file instanceof File) {
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        if (this.imagePreview.current) {
-          this.imagePreview.current.src = reader.result as string;
-          this.setState({ imagePreviewLink: reader.result });
-        }
-      };
-
-      reader.onerror = () => {
-        console.log(reader.error);
-      };
-    }
   }
 }
