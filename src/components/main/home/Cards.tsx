@@ -6,10 +6,10 @@ import CardsInfoRow from './CardsInfo';
 
 export default class Cards extends Component {
   ListItem(props: TProps) {
-    const albums = props.value?.albums;
+    const albums = props.database?.albums;
     const items = albums?.map((e) => {
       return (
-        <li className="card__item" key={e.id}>
+        <div className="card__item" key={e.id}>
           <div className="card-image__wrapper">
             <img className="card__image" src={e.cover} alt={e.album}></img>
           </div>
@@ -21,7 +21,7 @@ export default class Cards extends Component {
             <CardsInfoRow title="Tracks" info={e.tracks} />
             <CardsInfoRow title="Rating" info={e.rating} />
           </div>
-        </li>
+        </div>
       );
     });
     return (
@@ -32,6 +32,6 @@ export default class Cards extends Component {
   }
 
   render() {
-    return <this.ListItem value={music} />;
+    return <this.ListItem database={music} />;
   }
 }

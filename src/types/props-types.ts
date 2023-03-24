@@ -6,7 +6,7 @@ export type TProps = {
 
 export type TCardInfo = {
   title: string;
-  info: string | number;
+  info: string | number | boolean | JSX.Element;
 };
 
 export type TMusic = {
