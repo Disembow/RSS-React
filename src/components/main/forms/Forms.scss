@@ -38,6 +38,16 @@
       background: $borderColor1;
     }
   }
+
+  &__card {
+    padding: 1rem;
+
+    &_image {
+      width: 13rem;
+      height: 13rem;
+      border-radius: 0.5rem;
+    }
+  }
 }
 
 .input__file {
