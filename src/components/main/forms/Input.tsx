@@ -112,12 +112,7 @@ export default class Input extends React.Component {
         const image = reader.result;
         if (this.imagePreview.current && typeof image === 'string') {
           this.imagePreview.current.src = image;
-          this.setState(() => {
-            const imageList = [...this.state.imageList, image];
-            return {
-              imageList,
-            };
-          });
+          this.setState({ image: image });
         }
       };
 
@@ -264,13 +259,6 @@ export default class Input extends React.Component {
               ? this.selector.current.value.toLocaleUpperCase()
               : ''
           }
-          // notification={
-          //   this.checkbox.current?.checked === true ? (
-          //     <img src={checkmarkTrue} alt="checked" width="20" />
-          //   ) : (
-          //     <img src={checkmarkFalse} alt="not checked" width="20" />
-          //   )
-          // }
           notification={this.state.notificationList}
         />
       </>
