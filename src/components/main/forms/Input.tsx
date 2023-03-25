@@ -67,6 +67,11 @@ export default class Input extends React.Component {
       const lastNameList = [...this.state.lastNameList, this.state.lastName];
       const imageList = [...this.state.imageList, this.state.image];
       const notificationList = [...this.state.notificationList, this.state.notification];
+      const deliveryList = [
+        ...this.state.deliveryList,
+        this.state.delivery === '' ? this.defaultDeliveryDate : this.state.delivery,
+      ];
+
       return {
         cardsCount: this.state.cardsCount + 1,
         radio,
@@ -74,6 +79,7 @@ export default class Input extends React.Component {
         lastNameList,
         imageList,
         notificationList,
+        deliveryList,
       };
     });
 
@@ -253,7 +259,7 @@ export default class Input extends React.Component {
           radio={this.state.radio}
           firstName={this.state.firstNameList}
           lastName={this.state.lastNameList}
-          date={this.inputDate.current?.value as string}
+          date={this.state.deliveryList}
           postService={
             typeof this.selector.current?.value === 'string'
               ? this.selector.current.value.toLocaleUpperCase()

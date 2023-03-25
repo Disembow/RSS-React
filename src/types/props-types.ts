@@ -47,7 +47,7 @@ export type TFormCard = {
   radio: string[];
   firstName: string[];
   lastName: string[];
-  date: string;
+  date: string[];
   postService: string;
   notification: JSX.Element[];
 };
