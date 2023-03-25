@@ -45,10 +45,13 @@ export default class Input extends React.Component {
       firstNameList: [],
       lastName: '',
       lastNameList: [],
-      dateOfDelivery: '',
-      emailNotification: false,
-      paymentMethod: '',
+      image: '',
       imageList: [],
+      delivery: '',
+      deliveryList: [],
+      notification: false,
+      notificationList: [],
+      paymentMethod: '',
       cardsCount: 0,
     };
   }
@@ -58,15 +61,19 @@ export default class Input extends React.Component {
     // Validation
 
     // Change cards state
-    this.setState({ cardsCount: this.state.cardsCount + 1 });
     this.setState(() => {
       const radio = [...this.state.radio, this.state.radioCurrent];
       const firstNameList = [...this.state.firstNameList, this.state.firstName];
       const lastNameList = [...this.state.lastNameList, this.state.lastName];
+      const imageList = [...this.state.imageList, this.state.image];
+      const notificationList = [...this.state.notificationList, this.state.notification];
       return {
+        cardsCount: this.state.cardsCount + 1,
         radio,
         firstNameList,
         lastNameList,
+        imageList,
+        notificationList,
       };
     });
 
@@ -122,13 +129,21 @@ export default class Input extends React.Component {
 
   handleDataChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    console.log(e.target.value);
-    this.setState({ dateOfDelivery: e.target.value });
+    this.setState({ delivery: e.target.value });
   }
 
   handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     let status: boolean = e.target.checked;
     status ? (status = false) : (status = true);
+
+    this.setState({
+      notification:
+        this.checkbox.current?.checked === true ? (
+          <img src={checkmarkTrue} alt="checked" width="20" />
+        ) : (
+          <img src={checkmarkFalse} alt="not checked" width="20" />
+        ),
+    });
   };
 
   render() {
@@ -136,9 +151,7 @@ export default class Input extends React.Component {
       <>
         <form className="order__form" onSubmit={this.handleSubmit}>
           <div className="form__item form__item_radio" onChange={this.handleRadio}>
-            <label className="form__label" htmlFor="first-name">
-              How to address you:
-            </label>
+            <label className="form__label">How to address you:</label>
             <input className="form__checkbox" type="radio" value="Mr." name="gender" /> Mr.
             <input className="form__checkbox" type="radio" value="Ms." name="gender" /> Ms.
           </div>
@@ -251,13 +264,14 @@ export default class Input extends React.Component {
               ? this.selector.current.value.toLocaleUpperCase()
               : ''
           }
-          notification={
-            this.checkbox.current?.checked === true ? (
-              <img src={checkmarkTrue} alt="checked" width="20" />
-            ) : (
-              <img src={checkmarkFalse} alt="not checked" width="20" />
-            )
-          }
+          // notification={
+          //   this.checkbox.current?.checked === true ? (
+          //     <img src={checkmarkTrue} alt="checked" width="20" />
+          //   ) : (
+          //     <img src={checkmarkFalse} alt="not checked" width="20" />
+          //   )
+          // }
+          notification={this.state.notificationList}
         />
       </>
     );

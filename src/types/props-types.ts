@@ -25,17 +25,20 @@ type TAlbums = {
 };
 
 export type TState = {
+  cardsCount: number;
   radioCurrent: string;
   radio: string[];
   firstName: string;
   firstNameList: string[];
   lastName: string;
   lastNameList: string[];
-  dateOfDelivery: string;
-  emailNotification: boolean;
-  paymentMethod: string;
+  image: string;
   imageList: string[];
-  cardsCount: number;
+  delivery: string;
+  deliveryList: string[];
+  notification: boolean;
+  notificationList: JSX.Element[];
+  paymentMethod: string;
 };
 
 export type TFormCard = {
@@ -46,5 +49,5 @@ export type TFormCard = {
   lastName: string[];
   date: string;
   postService: string;
-  notification: JSX.Element;
+  notification: JSX.Element[];
 };
