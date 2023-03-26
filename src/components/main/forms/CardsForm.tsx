@@ -26,5 +26,5 @@ export default function CardsForm(props: TFormCard) {
     );
   }
 
-  return <div className="cards__wrapper">{cards}</div>;
+  return <div className="cards__wrapper cards__wrapper_forms">{cards}</div>;
 }

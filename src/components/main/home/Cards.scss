@@ -5,6 +5,10 @@
   flex-wrap: wrap;
   gap: 1rem;
   margin: 1rem 0;
+
+  &_forms {
+    justify-content: center;
+  }
 }
 
 .card__item {
