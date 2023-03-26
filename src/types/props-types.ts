@@ -2,6 +2,7 @@ export type TProps = {
   children?: string;
   database?: TMusic;
   value?: TMusic | string;
+  reference?: React.RefObject<HTMLDivElement>;
 };
 
 export type TCardInfo = {
@@ -51,4 +52,5 @@ export type TFormCard = {
   date: string[];
   postService: string[];
   notification: JSX.Element[];
+  children: JSX.Element;
 };

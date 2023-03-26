@@ -6,6 +6,7 @@ import checkmarkTrue from '../../../assets/checkbox-checked.svg';
 import checkmarkFalse from '../../../assets/checkbox.svg';
 import Button from './Button';
 import CardsForm from './CardsForm';
+import CreateSumbitMessage from './SubmitMessage';
 
 export default class Input extends React.Component {
   inputName: RefObject<HTMLInputElement>;
@@ -15,6 +16,7 @@ export default class Input extends React.Component {
   checkbox: RefObject<HTMLInputElement>;
   imageInput: RefObject<HTMLInputElement>;
   imagePreview: RefObject<HTMLImageElement>;
+  submitPopup: RefObject<HTMLDivElement>;
   defaultDeliveryDate: string;
   defaultPostProvider: string;
   defaultNotification: JSX.Element;
@@ -39,6 +41,7 @@ export default class Input extends React.Component {
     this.checkbox = createRef();
     this.imageInput = createRef();
     this.imagePreview = createRef();
+    this.submitPopup = createRef();
     this.defaultDeliveryDate = new Date().toISOString().slice(0, 10);
     this.defaultPostProvider = 'DHL';
     this.defaultNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
@@ -80,6 +83,9 @@ export default class Input extends React.Component {
         ...this.state.postProviderList,
         this.state.postProvider === '' ? this.defaultPostProvider : this.state.postProvider,
       ];
+
+      // Deleting popup message
+      setTimeout(() => this.submitPopup.current?.remove(), 3000);
 
       // Validation
 
@@ -265,7 +271,9 @@ export default class Input extends React.Component {
           date={this.state.deliveryList}
           postService={this.state.postProviderList}
           notification={this.state.notificationList}
-        />
+        >
+          {<CreateSumbitMessage reference={this.submitPopup} />}
+        </CardsForm>
       </>
     );
   }

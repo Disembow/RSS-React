@@ -22,15 +22,10 @@ export default function CardsForm(props: TFormCard) {
         <CardsInfoRow title="Delivery" info={props.date[i]} />
         <CardsInfoRow title="Post provider" info={props.postService[i]} />
         <CardsInfoRow title="Email notification" info={props.notification[i]} />
+        {props.children}
       </div>
     );
   }
 
   return <div className="cards__wrapper cards__wrapper_forms">{cards}</div>;
-}
-
-{
-  /* <div className="submit__popup" ref={this.submitPopup}>
-  Thx a lot for submiting. Information could be seen under the input form.
-</div>; */
 }
