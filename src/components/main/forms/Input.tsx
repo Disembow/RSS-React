@@ -9,6 +9,7 @@ import CardsForm from './CardsForm';
 import CreateSumbitMessage from './SubmitMessage';
 
 export default class Input extends React.Component {
+  form: RefObject<HTMLFormElement>;
   inputName: RefObject<HTMLInputElement>;
   inputSecName: RefObject<HTMLInputElement>;
   inputDate: RefObject<HTMLInputElement>;
@@ -34,6 +35,7 @@ export default class Input extends React.Component {
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleSelector = this.handleSelector.bind(this);
 
+    this.form = createRef();
     this.inputName = createRef();
     this.inputSecName = createRef();
     this.inputDate = createRef();
@@ -84,11 +86,6 @@ export default class Input extends React.Component {
         this.state.postProvider === '' ? this.defaultPostProvider : this.state.postProvider,
       ];
 
-      // Deleting popup message
-      setTimeout(() => this.submitPopup.current?.remove(), 3000);
-
-      // Validation
-
       return {
         cardsCount: this.state.cardsCount + 1,
         radio,
@@ -100,6 +97,16 @@ export default class Input extends React.Component {
         postProviderList,
       };
     });
+
+    // Deleting popup message
+    setTimeout(() => this.submitPopup.current?.remove(), 3000);
+
+    // Form reset
+    if (this.form.current && this.imagePreview.current) {
+      this.form.current.reset();
+      this.imagePreview.current.src = imageDefault;
+      console.log(this.state.imageList);
+    }
   }
 
   handleRadio(e: React.ChangeEvent<HTMLInputElement>) {
@@ -162,7 +169,7 @@ export default class Input extends React.Component {
   render() {
     return (
       <>
-        <form className="order__form" onSubmit={this.handleSubmit}>
+        <form className="order__form" onSubmit={this.handleSubmit} ref={this.form}>
           <div className="form__item form__item_radio" onChange={this.handleRadio}>
             <label className="form__label">How to address you:</label>
             <input className="form__checkbox" type="radio" value="Mr." name="gender" /> Mr.
@@ -196,6 +203,7 @@ export default class Input extends React.Component {
               required
             />
           </div>
+
           <div className="form__item">
             <label className="form__label" htmlFor="delivery-date">
               Delivery date:
@@ -212,6 +220,7 @@ export default class Input extends React.Component {
               required
             />
           </div>
+
           <div className="form__item">
             <label className="form__label" htmlFor="post-select">
               Post service:
@@ -227,6 +236,7 @@ export default class Input extends React.Component {
               <Option value="DPD">DPD</Option>
             </select>
           </div>
+
           <div className="form__item">
             <label className="form__label" htmlFor="data-agree-box">
               Email notifications:
@@ -239,6 +249,7 @@ export default class Input extends React.Component {
               ref={this.checkbox}
             />
           </div>
+
           <div className="form__item">
             <label className="form__label" htmlFor="avatar">
               Upload your image:
@@ -249,8 +260,10 @@ export default class Input extends React.Component {
               name="avatar"
               ref={this.imageInput}
               onChange={this.handleImages}
+              required
             />
           </div>
+
           <div className="image-preview__wrapper">
             <img
               className="image-preview__item"
@@ -259,6 +272,7 @@ export default class Input extends React.Component {
               alt="input file preview"
             />
           </div>
+
           <Button>Submit</Button>
         </form>
 
