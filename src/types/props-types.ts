@@ -36,9 +36,10 @@ export type TState = {
   imageList: string[];
   delivery: string;
   deliveryList: string[];
-  notification: boolean;
+  notification: JSX.Element;
   notificationList: JSX.Element[];
-  paymentMethod: string;
+  postProvider: string;
+  postProviderList: string[];
 };
 
 export type TFormCard = {
@@ -48,6 +49,6 @@ export type TFormCard = {
   firstName: string[];
   lastName: string[];
   date: string[];
-  postService: string;
+  postService: string[];
   notification: JSX.Element[];
 };

@@ -16,6 +16,8 @@ export default class Input extends React.Component {
   imageInput: RefObject<HTMLInputElement>;
   imagePreview: RefObject<HTMLImageElement>;
   defaultDeliveryDate: string;
+  defaultPostProvider: string;
+  defaultNotification: JSX.Element;
 
   state: TState;
 
@@ -28,6 +30,7 @@ export default class Input extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.handleSelector = this.handleSelector.bind(this);
 
     this.inputName = createRef();
     this.inputSecName = createRef();
@@ -37,8 +40,11 @@ export default class Input extends React.Component {
     this.imageInput = createRef();
     this.imagePreview = createRef();
     this.defaultDeliveryDate = new Date().toISOString().slice(0, 10);
+    this.defaultPostProvider = 'DHL';
+    this.defaultNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
 
     this.state = {
+      cardsCount: 0,
       radioCurrent: '',
       radio: [],
       firstName: '',
@@ -49,10 +55,10 @@ export default class Input extends React.Component {
       imageList: [],
       delivery: '',
       deliveryList: [],
-      notification: false,
+      notification: this.defaultNotification,
       notificationList: [],
-      paymentMethod: '',
-      cardsCount: 0,
+      postProvider: '',
+      postProviderList: [],
     };
   }
 
@@ -71,6 +77,10 @@ export default class Input extends React.Component {
         ...this.state.deliveryList,
         this.state.delivery === '' ? this.defaultDeliveryDate : this.state.delivery,
       ];
+      const postProviderList = [
+        ...this.state.postProviderList,
+        this.state.postProvider === '' ? this.defaultPostProvider : this.state.postProvider,
+      ];
 
       return {
         cardsCount: this.state.cardsCount + 1,
@@ -80,18 +90,9 @@ export default class Input extends React.Component {
         imageList,
         notificationList,
         deliveryList,
+        postProviderList,
       };
     });
-
-    // console.group('On form submit');
-    // console.log('Person: ' + this.state.radio);
-    // console.log('First name: ' + this.inputName.current?.value);
-    // console.log('Last name: ' + this.inputSecName.current?.value);
-    // console.log('Date of delivery: ' + this.inputDate.current?.value);
-    // console.log('Post service: ' + this.selector.current?.value.toUpperCase());
-    // console.log('Checkbox: ' + this.checkbox.current?.checked);
-    // console.log('Image: ' + this.imagePreview.current?.alt);
-    // console.groupEnd();
   }
 
   handleRadio(e: React.ChangeEvent<HTMLInputElement>) {
@@ -139,13 +140,17 @@ export default class Input extends React.Component {
 
     this.setState({
       notification:
-        this.checkbox.current?.checked === true ? (
+        e.target.checked === true ? (
           <img src={checkmarkTrue} alt="checked" width="20" />
         ) : (
           <img src={checkmarkFalse} alt="not checked" width="20" />
         ),
     });
   };
+
+  handleSelector(e: React.ChangeEvent<HTMLSelectElement>) {
+    this.setState({ postProvider: e.target.value });
+  }
 
   render() {
     return (
@@ -208,10 +213,15 @@ export default class Input extends React.Component {
             <label className="form__label" htmlFor="post-select">
               Post service:
             </label>
-            <select className="light-block" ref={this.selector} name="post-select">
-              <Option value="dhl">DHL</Option>
-              <Option value="ups">UPS</Option>
-              <Option value="dpd">DPD</Option>
+            <select
+              className="light-block"
+              ref={this.selector}
+              name="post-select"
+              onChange={this.handleSelector}
+            >
+              <Option value="DHL">DHL</Option>
+              <Option value="UPS">UPS</Option>
+              <Option value="DPD">DPD</Option>
             </select>
           </div>
 
@@ -260,11 +270,7 @@ export default class Input extends React.Component {
           firstName={this.state.firstNameList}
           lastName={this.state.lastNameList}
           date={this.state.deliveryList}
-          postService={
-            typeof this.selector.current?.value === 'string'
-              ? this.selector.current.value.toLocaleUpperCase()
-              : ''
-          }
+          postService={this.state.postProviderList}
           notification={this.state.notificationList}
         />
       </>
