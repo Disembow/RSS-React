@@ -64,7 +64,6 @@ export default class Input extends React.Component {
 
   handleSubmit(e: FormEvent) {
     e.preventDefault();
-    // Validation
 
     // Change cards state
     this.setState(() => {
@@ -81,6 +80,8 @@ export default class Input extends React.Component {
         ...this.state.postProviderList,
         this.state.postProvider === '' ? this.defaultPostProvider : this.state.postProvider,
       ];
+
+      // Validation
 
       return {
         cardsCount: this.state.cardsCount + 1,
@@ -161,7 +162,6 @@ export default class Input extends React.Component {
             <input className="form__checkbox" type="radio" value="Mr." name="gender" /> Mr.
             <input className="form__checkbox" type="radio" value="Ms." name="gender" /> Ms.
           </div>
-
           <div className="form__item" onChange={this.handleFirstName}>
             <label className="form__label" htmlFor="first-name">
               First name:
@@ -176,7 +176,6 @@ export default class Input extends React.Component {
               required
             />
           </div>
-
           <div className="form__item" onChange={this.handleLastName}>
             <label className="form__label" htmlFor="last-name">
               Last name:
@@ -191,7 +190,6 @@ export default class Input extends React.Component {
               required
             />
           </div>
-
           <div className="form__item">
             <label className="form__label" htmlFor="delivery-date">
               Delivery date:
@@ -208,7 +206,6 @@ export default class Input extends React.Component {
               required
             />
           </div>
-
           <div className="form__item">
             <label className="form__label" htmlFor="post-select">
               Post service:
@@ -224,7 +221,6 @@ export default class Input extends React.Component {
               <Option value="DPD">DPD</Option>
             </select>
           </div>
-
           <div className="form__item">
             <label className="form__label" htmlFor="data-agree-box">
               Email notifications:
@@ -237,7 +233,6 @@ export default class Input extends React.Component {
               ref={this.checkbox}
             />
           </div>
-
           <div className="form__item">
             <label className="form__label" htmlFor="avatar">
               Upload your image:
@@ -250,7 +245,6 @@ export default class Input extends React.Component {
               onChange={this.handleImages}
             />
           </div>
-
           <div className="image-preview__wrapper">
             <img
               className="image-preview__item"
@@ -259,7 +253,6 @@ export default class Input extends React.Component {
               alt="input file preview"
             />
           </div>
-
           <Button>Submit</Button>
         </form>
 

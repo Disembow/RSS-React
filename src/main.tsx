@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './main.scss';
 
-const root: HTMLDivElement | null = document.querySelector('#root');
+export const root: HTMLDivElement | null = document.querySelector('#root');
 if (root)
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
