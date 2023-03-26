@@ -19,10 +19,16 @@ describe('App', () => {
   });
 });
 
+enum TestRoutes {
+  Home = '/',
+  NotFound = '/some/bad/route',
+  About = '/about',
+  Forms = '/forms',
+}
+
 test('Renders Page not found if user enter wrong path', () => {
-  const badRoute = '/wrong/way/link';
   render(
-    <MemoryRouter initialEntries={[badRoute]}>
+    <MemoryRouter initialEntries={[TestRoutes.NotFound]}>
       <Routes>
         <Route index element={<Home />}></Route>
         <Route path="about" element={<Title>{'About'}</Title>}></Route>
@@ -38,9 +44,9 @@ test('Renders Page not found if user enter wrong path', () => {
   ).toHaveTextContent('Page not found :(');
 });
 
-test('Renders Page not found if user enter wrong path', () => {
+test('Renders About page if user enter about path', () => {
   render(
-    <MemoryRouter initialEntries={['/about']}>
+    <MemoryRouter initialEntries={[TestRoutes.About]}>
       <Routes>
         <Route index element={<Home />}></Route>
         <Route path="about" element={<Title>{'About'}</Title>}></Route>
@@ -56,9 +62,9 @@ test('Renders Page not found if user enter wrong path', () => {
   ).toHaveTextContent('About');
 });
 
-test('Renders Page not found if user enter wrong path', () => {
+test('Renders Forms page if user enter forms page path', () => {
   render(
-    <MemoryRouter initialEntries={['/forms']}>
+    <MemoryRouter initialEntries={[TestRoutes.Forms]}>
       <Routes>
         <Route index element={<Home />}></Route>
         <Route path="about" element={<Title>{'About'}</Title>}></Route>
