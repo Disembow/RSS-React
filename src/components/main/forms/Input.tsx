@@ -72,7 +72,6 @@ export default class Input extends React.Component {
   handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    // Change cards state
     this.setState(() => {
       const radio = [...this.state.radio, this.state.radioCurrent];
       const firstNameList = [...this.state.firstNameList, this.state.firstName];
@@ -100,10 +99,8 @@ export default class Input extends React.Component {
       };
     });
 
-    // Deleting popup message
     setTimeout(() => this.submitPopup.current?.remove(), 3000);
 
-    // Form reset
     if (this.form.current && this.imagePreview.current) {
       this.form.current.reset();
       this.imagePreview.current.src = imageDefault;
