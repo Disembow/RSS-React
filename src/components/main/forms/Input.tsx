@@ -21,7 +21,8 @@ export default class Input extends React.Component {
   defaultDeliveryDate: string;
   defaultPostProvider: string;
   PostProviders: string[];
-  defaultNotification: JSX.Element;
+  withNotification: JSX.Element;
+  withoutNotification: JSX.Element;
 
   state: TState;
 
@@ -30,7 +31,6 @@ export default class Input extends React.Component {
     this.handleImages = this.handleImages.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 
     this.form = createRef();
     this.inputName = createRef();
@@ -44,7 +44,8 @@ export default class Input extends React.Component {
     this.defaultDeliveryDate = new Date().toISOString().slice(0, 10);
     this.defaultPostProvider = 'DHL';
     this.PostProviders = ['DHL', 'UPS', 'DPD'];
-    this.defaultNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
+    this.withNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
+    this.withoutNotification = <img src={checkmarkTrue} alt="not checked" width="20" />;
 
     this.state = {
       cardsCount: 0,
@@ -58,7 +59,7 @@ export default class Input extends React.Component {
       imageList: [],
       delivery: '',
       deliveryList: [],
-      notification: this.defaultNotification,
+      notification: <></>,
       notificationList: [],
       postProvider: '',
       postProviderList: [],
@@ -73,7 +74,10 @@ export default class Input extends React.Component {
       const firstNameList = [...this.state.firstNameList, this.inputName.current?.value];
       const lastNameList = [...this.state.lastNameList, this.inputSecName.current?.value];
       const imageList = [...this.state.imageList, this.state.image];
-      const notificationList = [...this.state.notificationList, this.state.notification];
+      const notificationList = [
+        ...this.state.notificationList,
+        this.checkbox.current?.checked ? this.withoutNotification : this.withNotification,
+      ];
       const deliveryList = [...this.state.deliveryList, this.inputDate.current?.value];
       const postProviderList = [...this.state.postProviderList, this.selector.current?.value];
 
@@ -123,20 +127,6 @@ export default class Input extends React.Component {
       };
     }
   }
-
-  handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    let status: boolean = e.target.checked;
-    status ? (status = false) : (status = true);
-
-    this.setState({
-      notification:
-        e.target.checked === true ? (
-          <img src={checkmarkTrue} alt="checked" width="20" />
-        ) : (
-          <img src={checkmarkFalse} alt="not checked" width="20" />
-        ),
-    });
-  };
 
   render() {
     return (
@@ -210,7 +200,7 @@ export default class Input extends React.Component {
             </label>
             <input
               className="form__checkbox"
-              onChange={this.handleCheckboxChange}
+              // onChange={this.handleCheckboxChange}
               type="checkbox"
               name="data-agree-box"
               ref={this.checkbox}
