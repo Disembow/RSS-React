@@ -31,7 +31,6 @@ export default class Input extends React.Component {
     this.handleRadio = this.handleRadio.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-    this.handleSelector = this.handleSelector.bind(this);
 
     this.form = createRef();
     this.inputName = createRef();
