@@ -29,10 +29,7 @@ export default class Input extends React.Component {
     super(props);
     this.handleImages = this.handleImages.bind(this);
     this.handleRadio = this.handleRadio.bind(this);
-    this.handleFirstName = this.handleFirstName.bind(this);
-    this.handleLastName = this.handleLastName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDataChange = this.handleDataChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.handleSelector = this.handleSelector.bind(this);
 
@@ -74,18 +71,12 @@ export default class Input extends React.Component {
 
     this.setState(() => {
       const radio = [...this.state.radio, this.state.radioCurrent];
-      const firstNameList = [...this.state.firstNameList, this.state.firstName];
-      const lastNameList = [...this.state.lastNameList, this.state.lastName];
+      const firstNameList = [...this.state.firstNameList, this.inputName.current?.value];
+      const lastNameList = [...this.state.lastNameList, this.inputSecName.current?.value];
       const imageList = [...this.state.imageList, this.state.image];
       const notificationList = [...this.state.notificationList, this.state.notification];
-      const deliveryList = [
-        ...this.state.deliveryList,
-        this.state.delivery === '' ? this.defaultDeliveryDate : this.state.delivery,
-      ];
-      const postProviderList = [
-        ...this.state.postProviderList,
-        this.state.postProvider === '' ? this.defaultPostProvider : this.state.postProvider,
-      ];
+      const deliveryList = [...this.state.deliveryList, this.inputDate.current?.value];
+      const postProviderList = [...this.state.postProviderList, this.selector.current?.value];
 
       return {
         cardsCount: this.state.cardsCount + 1,
@@ -99,24 +90,17 @@ export default class Input extends React.Component {
       };
     });
 
-    setTimeout(() => this.submitPopup.current?.remove(), 3000);
-
-    if (this.form.current && this.imagePreview.current) {
-      this.form.current.reset();
-      this.imagePreview.current.src = imageDefault;
-    }
+    setTimeout(() => {
+      this.submitPopup.current?.remove();
+      if (this.form.current && this.imagePreview.current) {
+        this.form.current.reset();
+        this.imagePreview.current.src = imageDefault;
+      }
+    }, 3000);
   }
 
   handleRadio(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ radioCurrent: e.target.value });
-  }
-
-  handleFirstName(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ firstName: e.target.value });
-  }
-
-  handleLastName(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ lastName: e.target.value });
   }
 
   handleImages(e: React.ChangeEvent<HTMLInputElement>) {
@@ -141,11 +125,6 @@ export default class Input extends React.Component {
     }
   }
 
-  handleDataChange(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    this.setState({ delivery: e.target.value });
-  }
-
   handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     let status: boolean = e.target.checked;
     status ? (status = false) : (status = true);
@@ -160,10 +139,6 @@ export default class Input extends React.Component {
     });
   };
 
-  handleSelector(e: React.ChangeEvent<HTMLSelectElement>) {
-    this.setState({ postProvider: e.target.value });
-  }
-
   render() {
     return (
       <>
@@ -173,7 +148,7 @@ export default class Input extends React.Component {
             <input className="form__checkbox" type="radio" value="Mr." name="gender" /> Mr.
             <input className="form__checkbox" type="radio" value="Ms." name="gender" /> Ms.
           </div>
-          <div className="form__item" onChange={this.handleFirstName}>
+          <div className="form__item">
             <label className="form__label" htmlFor="first-name">
               First name:
             </label>
@@ -187,7 +162,7 @@ export default class Input extends React.Component {
               required
             />
           </div>
-          <div className="form__item" onChange={this.handleLastName}>
+          <div className="form__item">
             <label className="form__label" htmlFor="last-name">
               Last name:
             </label>
@@ -214,7 +189,6 @@ export default class Input extends React.Component {
               min={new Date().toISOString().slice(0, 10)}
               max={`${new Date().getFullYear() + 1}${new Date().toISOString().slice(4, 10)}`}
               defaultValue={this.defaultDeliveryDate}
-              onChange={this.handleDataChange}
               required
             />
           </div>
@@ -227,7 +201,7 @@ export default class Input extends React.Component {
               value={this.PostProviders}
               className={'light-block'}
               name="post-select"
-              onChange={this.handleSelector}
+              reference={this.selector}
             />
           </div>
 

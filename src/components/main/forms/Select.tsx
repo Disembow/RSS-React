@@ -4,7 +4,7 @@ type TOption = {
   value: string[];
   name: string;
   className: string;
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+  reference?: React.RefObject<HTMLSelectElement>;
 };
 
 export default function Options(props: TOption) {
@@ -17,7 +17,7 @@ export default function Options(props: TOption) {
   });
 
   return (
-    <select className={props.className} onChange={props.onChange} name={props.name}>
+    <select ref={props.reference} className={props.className} name={props.name}>
       {options}
     </select>
   );
