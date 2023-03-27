@@ -1,6 +1,6 @@
 import React, { createRef, FormEvent, RefObject } from 'react';
 import { TProps, TState } from '../../../types/props-types';
-import Option from './Option';
+import Select from './Select';
 import imageDefault from '../../../assets/image_default.webp';
 import checkmarkTrue from '../../../assets/checkbox-checked.svg';
 import checkmarkFalse from '../../../assets/checkbox.svg';
@@ -20,6 +20,7 @@ export default class Input extends React.Component {
   submitPopup: RefObject<HTMLDivElement>;
   defaultDeliveryDate: string;
   defaultPostProvider: string;
+  PostProviders: string[];
   defaultNotification: JSX.Element;
 
   state: TState;
@@ -46,6 +47,7 @@ export default class Input extends React.Component {
     this.submitPopup = createRef();
     this.defaultDeliveryDate = new Date().toISOString().slice(0, 10);
     this.defaultPostProvider = 'DHL';
+    this.PostProviders = ['DHL', 'UPS', 'DPD'];
     this.defaultNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
 
     this.state = {
@@ -105,7 +107,6 @@ export default class Input extends React.Component {
     if (this.form.current && this.imagePreview.current) {
       this.form.current.reset();
       this.imagePreview.current.src = imageDefault;
-      console.log(this.state.imageList);
     }
   }
 
@@ -225,16 +226,12 @@ export default class Input extends React.Component {
             <label className="form__label" htmlFor="post-select">
               Post service:
             </label>
-            <select
-              className="light-block"
-              ref={this.selector}
+            <Select
+              value={this.PostProviders}
+              className={'light-block'}
               name="post-select"
               onChange={this.handleSelector}
-            >
-              <Option value="DHL">DHL</Option>
-              <Option value="UPS">UPS</Option>
-              <Option value="DPD">DPD</Option>
-            </select>
+            />
           </div>
 
           <div className="form__item">
