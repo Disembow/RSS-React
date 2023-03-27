@@ -10,6 +10,8 @@ import CreateSumbitMessage from './SubmitMessage';
 
 export default class Input extends React.Component {
   form: RefObject<HTMLFormElement>;
+  radio1: RefObject<HTMLInputElement>;
+  radio2: RefObject<HTMLInputElement>;
   inputName: RefObject<HTMLInputElement>;
   inputSecName: RefObject<HTMLInputElement>;
   inputDate: RefObject<HTMLInputElement>;
@@ -29,10 +31,11 @@ export default class Input extends React.Component {
   constructor(props: TProps) {
     super(props);
     this.handleImages = this.handleImages.bind(this);
-    this.handleRadio = this.handleRadio.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.form = createRef();
+    this.radio1 = createRef();
+    this.radio2 = createRef();
     this.inputName = createRef();
     this.inputSecName = createRef();
     this.inputDate = createRef();
@@ -66,11 +69,23 @@ export default class Input extends React.Component {
     };
   }
 
+  radioCurrState() {
+    let result = 'asd';
+    if (this.radio1.current?.checked) {
+      result = this.radio1.current.value;
+      return result;
+    } else if (this.radio2.current?.checked) {
+      result = this.radio2.current.value;
+      return result;
+    }
+    return result;
+  }
+
   handleSubmit(e: FormEvent) {
     e.preventDefault();
 
     this.setState(() => {
-      const radio = [...this.state.radio, this.state.radioCurrent];
+      const radio = [...this.state.radio, this.radioCurrState()];
       const firstNameList = [...this.state.firstNameList, this.inputName.current?.value];
       const lastNameList = [...this.state.lastNameList, this.inputSecName.current?.value];
       const imageList = [...this.state.imageList, this.state.image];
@@ -102,29 +117,26 @@ export default class Input extends React.Component {
     }, 3000);
   }
 
-  handleRadio(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ radioCurrent: e.target.value });
-  }
+  handleImages() {
+    if (this.imageInput.current?.files) {
+      const file = this.imageInput.current?.files[0];
+      const reader = new FileReader();
 
-  handleImages(e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const file = e.target.files?.[0];
-    const reader = new FileReader();
+      if (file instanceof File) {
+        reader.readAsDataURL(file);
 
-    if (file instanceof File) {
-      reader.readAsDataURL(file);
+        reader.onload = () => {
+          const image = reader.result;
+          if (this.imagePreview.current && typeof image === 'string') {
+            this.imagePreview.current.src = image;
+            this.setState({ image: image });
+          }
+        };
 
-      reader.onload = () => {
-        const image = reader.result;
-        if (this.imagePreview.current && typeof image === 'string') {
-          this.imagePreview.current.src = image;
-          this.setState({ image: image });
-        }
-      };
-
-      reader.onerror = () => {
-        console.log(reader.error);
-      };
+        reader.onerror = () => {
+          console.log(reader.error);
+        };
+      }
     }
   }
 
@@ -132,11 +144,28 @@ export default class Input extends React.Component {
     return (
       <>
         <form className="order__form" onSubmit={this.handleSubmit} ref={this.form}>
-          <div className="form__item form__item_radio" onChange={this.handleRadio}>
-            <label className="form__label">How to address you:</label>
-            <input className="form__checkbox" type="radio" value="Mr." name="gender" /> Mr.
-            <input className="form__checkbox" type="radio" value="Ms." name="gender" /> Ms.
+          <div className="form__item form__item_radio">
+            <label className="form__label" htmlFor="gender">
+              How to address you:
+            </label>
+            <input
+              className="form__checkbox"
+              type="radio"
+              ref={this.radio1}
+              value="Mr."
+              name="gender"
+            />{' '}
+            Mr.
+            <input
+              className="form__checkbox"
+              type="radio"
+              ref={this.radio2}
+              value="Ms."
+              name="gender"
+            />{' '}
+            Ms.
           </div>
+
           <div className="form__item">
             <label className="form__label" htmlFor="first-name">
               First name:
@@ -151,6 +180,7 @@ export default class Input extends React.Component {
               required
             />
           </div>
+
           <div className="form__item">
             <label className="form__label" htmlFor="last-name">
               Last name:
@@ -200,7 +230,6 @@ export default class Input extends React.Component {
             </label>
             <input
               className="form__checkbox"
-              // onChange={this.handleCheckboxChange}
               type="checkbox"
               name="data-agree-box"
               ref={this.checkbox}
