@@ -18,10 +18,19 @@ export default function CardsForm(props: TFormCard) {
         <CardsInfoRow
           title="Full name"
           info={props.radio[i] + ' ' + props.firstName[i] + ' ' + props.lastName[i]}
+          data-testid="fullname"
         />
-        <CardsInfoRow title="Delivery" info={props.date[i]} />
-        <CardsInfoRow title="Post provider" info={props.postService[i]} />
-        <CardsInfoRow title="Email notification" info={props.notification[i]} />
+        <CardsInfoRow title="Delivery" info={props.date[i]} data-testid="delivery-date" />
+        <CardsInfoRow
+          title="Post provider"
+          info={props.postService[i]}
+          data-testid="post-provider"
+        />
+        <CardsInfoRow
+          title="Email notification"
+          info={props.notification[i]}
+          data-testid="email-notice"
+        />
         {props.children}
       </div>
     );

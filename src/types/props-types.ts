@@ -8,6 +8,7 @@ export type TProps = {
 export type TCardInfo = {
   title: string;
   info: string | number | boolean | JSX.Element;
+  'data-testid': string;
 };
 
 export type TMusic = {

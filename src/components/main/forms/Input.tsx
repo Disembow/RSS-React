@@ -48,7 +48,7 @@ export default class Input extends React.Component {
     this.defaultPostProvider = 'DHL';
     this.PostProviders = ['DHL', 'UPS', 'DPD'];
     this.withNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
-    this.withoutNotification = <img src={checkmarkTrue} alt="not checked" width="20" />;
+    this.withoutNotification = <img src={checkmarkTrue} alt="checked" width="20" />;
 
     this.state = {
       cardsCount: 0,
@@ -70,15 +70,12 @@ export default class Input extends React.Component {
   }
 
   radioCurrState() {
-    let result = '';
     if (this.radio1.current?.checked) {
-      result = this.radio1.current.value;
-      return result;
+      return this.radio1.current.value;
     } else if (this.radio2.current?.checked) {
-      result = this.radio2.current.value;
-      return result;
+      return this.radio2.current.value;
     }
-    return result;
+    return '';
   }
 
   handleSubmit(e: FormEvent) {
