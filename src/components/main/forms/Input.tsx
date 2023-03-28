@@ -70,7 +70,7 @@ export default class Input extends React.Component {
   }
 
   radioCurrState() {
-    let result = 'asd';
+    let result = '';
     if (this.radio1.current?.checked) {
       result = this.radio1.current.value;
       return result;
@@ -154,6 +154,7 @@ export default class Input extends React.Component {
               ref={this.radio1}
               value="Mr."
               name="gender"
+              id="gender"
             />{' '}
             Mr.
             <input
@@ -162,6 +163,7 @@ export default class Input extends React.Component {
               ref={this.radio2}
               value="Ms."
               name="gender"
+              id="gender"
             />{' '}
             Ms.
           </div>
@@ -175,6 +177,7 @@ export default class Input extends React.Component {
               type="text"
               ref={this.inputName}
               name="first-name"
+              id="first-name"
               autoComplete="off"
               placeholder="Enter your first name"
               required
@@ -190,6 +193,7 @@ export default class Input extends React.Component {
               type="text"
               ref={this.inputSecName}
               name="last-name"
+              id="last-name"
               autoComplete="off"
               placeholder="Enter your last name"
               required
@@ -205,6 +209,7 @@ export default class Input extends React.Component {
               type="date"
               ref={this.inputDate}
               name="delivery-date"
+              id="delivery-date"
               min={new Date().toISOString().slice(0, 10)}
               max={`${new Date().getFullYear() + 1}${new Date().toISOString().slice(4, 10)}`}
               defaultValue={this.defaultDeliveryDate}
@@ -220,6 +225,7 @@ export default class Input extends React.Component {
               value={this.PostProviders}
               className={'light-block'}
               name="post-select"
+              id="post-select"
               reference={this.selector}
             />
           </div>
@@ -232,6 +238,7 @@ export default class Input extends React.Component {
               className="form__checkbox"
               type="checkbox"
               name="data-agree-box"
+              id="data-agree-box"
               ref={this.checkbox}
             />
           </div>
@@ -244,6 +251,7 @@ export default class Input extends React.Component {
               className="input__file"
               type="file"
               name="avatar"
+              id="avatar"
               ref={this.imageInput}
               onChange={this.handleImages}
               required

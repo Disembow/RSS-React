@@ -3,6 +3,7 @@ import React from 'react';
 type TOption = {
   value: string[];
   name: string;
+  id: string;
   className: string;
   reference?: React.RefObject<HTMLSelectElement>;
 };
