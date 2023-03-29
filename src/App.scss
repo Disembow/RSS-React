@@ -1,0 +1,44 @@
+@use './styles' as *;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin: 1rem;
+
+  &__item {
+    width: 6rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+    border-bottom: 3px solid $borderColor1;
+    padding: 0.1rem;
+    text-align: center;
+    transition: linear 0.2s;
+    text-decoration: none;
+    color: $primaryColor1;
+
+    &:hover {
+      transform: scale(1.04);
+      transition: linear 0.2s;
+      font-weight: 600;
+    }
+
+    &:visited {
+      text-decoration: none;
+      color: $primaryColor1;
+    }
+  }
+}
+
+.active {
+  background-color: $backgroundcColor1;
+  font-weight: 600;
+}

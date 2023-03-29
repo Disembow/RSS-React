@@ -1,0 +1,49 @@
+.cards__wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  &_forms {
+    justify-content: center;
+  }
+}
+
+.card__item {
+  display: block;
+  width: 15rem;
+  height: 22rem;
+  border: 1px solid #d1d1d1;
+  border-radius: 1rem;
+}
+
+.card-image__wrapper {
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-right-radius: 0.94rem;
+  border-top-left-radius: 0.94rem;
+  cursor: pointer;
+}
+
+.card__info {
+  margin: 0.5rem;
+}
+
+.card-info__row {
+}
+
+.card-info__title {
+  color: #a9a9a9;
+  font-weight: 600;
+}
+
+.card-info__item {
+}
