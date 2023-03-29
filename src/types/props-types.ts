@@ -57,6 +57,7 @@ export type TFormCard = {
 };
 
 export type TOption = {
+  labelText?: string;
   value: string[];
   name?: string;
   id: string;

@@ -1,14 +1,14 @@
 import React from 'react';
 import './Forms.scss';
 import Title from '../../header/Title';
-import Input from './Input';
+import Form from './Form';
 
-export default class Forms extends React.Component {
+export default class FormPage extends React.Component {
   render() {
     return (
       <main className="main">
         <Title>{'Forms page'}</Title>
-        <Input />
+        <Form />
       </main>
     );
   }

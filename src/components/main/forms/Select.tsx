@@ -11,13 +11,18 @@ export default function Select(props: TOption) {
   });
 
   return (
-    <select
-      ref={props.reference}
-      className={props.className}
-      name={props.name}
-      data-testid={props['data-testid']}
-    >
-      {options}
-    </select>
+    <>
+      <label className="form__label" htmlFor="post-select">
+        {props.labelText}
+      </label>
+      <select
+        ref={props.reference}
+        className={props.className}
+        name={props.name}
+        data-testid={props['data-testid']}
+      >
+        {options}
+      </select>
+    </>
   );
 }

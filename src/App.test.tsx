@@ -6,7 +6,7 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 import Home from './components/main/home/Home';
 import Title from './components/header/Title';
-import Forms from './components/main/forms/Forms';
+import Forms from './components/main/forms/FormPage';
 
 describe('App', () => {
   it('Renders Home page', () => {
