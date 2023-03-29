@@ -55,3 +55,12 @@ export type TFormCard = {
   notification: JSX.Element[];
   children: JSX.Element;
 };
+
+export type TOption = {
+  value: string[];
+  name?: string;
+  id: string;
+  'data-testid'?: string;
+  className: string;
+  reference?: React.RefObject<HTMLSelectElement>;
+};

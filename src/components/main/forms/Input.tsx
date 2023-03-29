@@ -249,6 +249,7 @@ export default class Input extends React.Component {
               type="file"
               name="avatar"
               id="avatar"
+              data-testid="avatar"
               ref={this.imageInput}
               onChange={this.handleImages}
               required

@@ -1,14 +1,7 @@
 import React from 'react';
+import { TOption } from '../../../types/props-types';
 
-type TOption = {
-  value: string[];
-  name: string;
-  id: string;
-  className: string;
-  reference?: React.RefObject<HTMLSelectElement>;
-};
-
-export default function Options(props: TOption) {
+export default function Select(props: TOption) {
   const options = props.value.map((e, i) => {
     return (
       <option key={i} value={props.value[i]}>
@@ -18,7 +11,12 @@ export default function Options(props: TOption) {
   });
 
   return (
-    <select ref={props.reference} className={props.className} name={props.name}>
+    <select
+      ref={props.reference}
+      className={props.className}
+      name={props.name}
+      data-testid={props['data-testid']}
+    >
       {options}
     </select>
   );
