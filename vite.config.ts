@@ -13,7 +13,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
     coverage: {
-      exclude: [...(configDefaults.coverage.exclude || []), 'src/main.tsx', 'src/HOC/*.tsx'],
+      exclude: [...(configDefaults.coverage.exclude || []), 'src/main.tsx'],
       all: true,
       src: ['src'],
       provider: 'c8',
