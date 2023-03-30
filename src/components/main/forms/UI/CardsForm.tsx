@@ -1,7 +1,7 @@
 import React from 'react';
-import CardsInfoRow from '../home/CardsInfo';
-import { TFormCard } from '../../../types/props-types';
-import imageDefault from '../../../assets/image_default.webp';
+import CardsInfoRow from '../../home/UI/CardsInfo';
+import { TFormCard } from '../../../../types/props-types';
+import imageDefault from '../../../../assets/image_default.webp';
 
 export default function CardsForm(props: TFormCard) {
   const cards: JSX.Element[] = [];

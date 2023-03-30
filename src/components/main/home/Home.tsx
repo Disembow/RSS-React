@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Title from '../../header/Title';
-import Cards from './Cards';
+import Cards from './UI/Cards';
 import './Home.scss';
 
 export default function Home() {

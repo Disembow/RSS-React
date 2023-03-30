@@ -1,5 +1,5 @@
 import React from 'react';
-import { TProps } from '../../../types/props-types';
+import { TProps } from '../../../../types/props-types';
 
 const CreateSumbitMessage = (props: TProps) => {
   return (

@@ -1,13 +1,13 @@
 import React, { createRef, FormEvent, RefObject } from 'react';
 import { TProps, TState } from '../../../types/props-types';
-import Select from './Select';
+import Select from './UI/Select';
 import imageDefault from '../../../assets/image_default.webp';
 import checkmarkTrue from '../../../assets/checkbox-checked.svg';
 import checkmarkFalse from '../../../assets/checkbox.svg';
-import Button from './Button';
-import Input from './Input';
-import CardsForm from './CardsForm';
-import CreateSumbitMessage from './SubmitMessage';
+import Button from './UI/Button';
+import Input from './UI/Input';
+import CardsForm from './UI/CardsForm';
+import CreateSumbitMessage from './UI/SubmitMessage';
 
 export default class Form extends React.Component {
   form: RefObject<HTMLFormElement>;

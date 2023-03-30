@@ -1,5 +1,5 @@
 import React from 'react';
-import './Forms.scss';
+import './FormPage.scss';
 import Title from '../../header/Title';
 import Form from './Form';
 

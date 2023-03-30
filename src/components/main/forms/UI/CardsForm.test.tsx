@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CardsForm from './CardsForm';
-import { TFormCard } from '../../../types/props-types';
+import { TFormCard } from '../../../../types/props-types';
 import CreateSumbitMessage from './SubmitMessage';
 import checkmarkTrue from '../../../assets/checkbox-checked.svg';
 import checkmarkFalse from '../../../assets/checkbox.svg';

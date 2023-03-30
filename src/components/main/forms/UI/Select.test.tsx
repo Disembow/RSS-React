@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { TOption } from '../../../types/props-types';
+import { TOption } from '../../../../types/props-types';
 import Select from './Select';
 
 const mockOptions: TOption = {

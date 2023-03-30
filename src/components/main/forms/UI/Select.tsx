@@ -1,5 +1,5 @@
 import React from 'react';
-import { TOption } from '../../../types/props-types';
+import { TOption } from '../../../../types/props-types';
 
 export default function Select(props: TOption) {
   const options = props.value.map((e, i) => {
