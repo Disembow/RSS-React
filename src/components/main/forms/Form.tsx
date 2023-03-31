@@ -6,8 +6,6 @@ import checkmarkTrue from '../../../assets/checkbox-checked.svg';
 import checkmarkFalse from '../../../assets/checkbox.svg';
 import Button from './UI/Button';
 import Input from './UI/Input';
-import CardsForm from './UI/CardsForm';
-import CreateSumbitMessage from './UI/SubmitMessage';
 
 export default class Form extends React.Component {
   form: RefObject<HTMLFormElement>;
@@ -257,19 +255,6 @@ export default class Form extends React.Component {
 
           <Button>Submit</Button>
         </form>
-
-        <CardsForm
-          number={this.state.cardsCount}
-          logo={this.state.imageList}
-          radio={this.state.radio}
-          firstName={this.state.firstNameList}
-          lastName={this.state.lastNameList}
-          date={this.state.deliveryList}
-          postService={this.state.postProviderList}
-          notification={this.state.notificationList}
-        >
-          {<CreateSumbitMessage reference={this.submitPopup} />}
-        </CardsForm>
       </>
     );
   }

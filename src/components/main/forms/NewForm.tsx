@@ -27,8 +27,8 @@ export default function NewForm() {
     mode: 'onChange',
     defaultValues: {
       radio: '',
-      firstName: 'Jack',
-      lastName: 'Crow',
+      firstName: '',
+      lastName: '',
       deliveryDate: defaultDeliveryDate,
       postProvider: 'DHL',
       checkbox: false,
@@ -56,7 +56,16 @@ export default function NewForm() {
 
     setCard([...card, data]);
 
+    setVisible((prev) => !prev);
+
     reset();
+  };
+
+  const [visible, setVisible] = useState(false);
+
+  const clickHandler = function () {
+    setVisible((prev) => !prev);
+    console.log(visible);
   };
 
   return (
@@ -195,7 +204,7 @@ export default function NewForm() {
       </form>
 
       <CardsForm number={cardImageList.length} logo={cardImageList} data={card}>
-        <CreateSumbitMessage />
+        {visible ? <CreateSumbitMessage callback={clickHandler} /> : <></>}
       </CardsForm>
     </>
   );

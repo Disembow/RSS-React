@@ -1,17 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
-const CreateSumbitMessage = () => {
-  const ref = useRef(null);
-
-  const clickHandler = function () {
-    const div = ref.current! as HTMLElement;
-    div.remove();
-  };
-
+const CreateSumbitMessage = ({ callback }: { callback: () => void }) => {
   return (
-    <div className="overlay" ref={ref} onClick={clickHandler}>
+    <div className="overlay" onClick={callback}>
       <div className="submit__popup">
-        Thx a lot for submiting. You could see the card under the input form.
+        Thx a lot for submiting. You will see the card under the input form.
       </div>
     </div>
   );
