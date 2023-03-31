@@ -1,3 +1,5 @@
+import { TNewForm } from '../components/main/forms/NewForm';
+
 export type TProps = {
   children?: string;
   database?: TMusic;
@@ -45,23 +47,24 @@ export type TState = {
 };
 
 export type TFormCard = {
-  number: number;
+  number?: number;
   logo: string[];
-  radio: string[];
-  firstName: string[];
-  lastName: string[];
-  date: string[];
-  postService: string[];
-  notification: JSX.Element[];
-  children: JSX.Element;
+  radio?: string[];
+  firstName?: string[];
+  lastName?: string[];
+  date?: string[];
+  postService?: string[];
+  notification?: JSX.Element[];
+  children?: JSX.Element;
+  data: TNewForm[];
 };
 
 export type TOption = {
   labelText?: string;
   value: string[];
   name?: string;
-  id: string;
+  id?: string;
   'data-testid'?: string;
-  className: string;
+  className?: string;
   reference?: React.RefObject<HTMLSelectElement>;
 };

@@ -1,10 +1,18 @@
-import React from 'react';
-import { TProps } from '../../../../types/props-types';
+import React, { useRef } from 'react';
 
-const CreateSumbitMessage = (props: TProps) => {
+const CreateSumbitMessage = () => {
+  const ref = useRef(null);
+
+  const clickHandler = function () {
+    const div = ref.current! as HTMLElement;
+    div.remove();
+  };
+
   return (
-    <div className="submit__popup" ref={props.reference}>
-      Thx a lot for submiting. Information could be seen under the input form.
+    <div className="overlay" ref={ref} onClick={clickHandler}>
+      <div className="submit__popup">
+        Thx a lot for submiting. You could see the card under the input form.
+      </div>
     </div>
   );
 };

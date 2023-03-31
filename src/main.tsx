@@ -6,7 +6,7 @@ import './main.scss';
 export const root: HTMLDivElement | null = document.querySelector('#root');
 if (root)
   ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    // <React.StrictMode>
+    <App />
+    // </React.StrictMode>
   );

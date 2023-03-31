@@ -78,6 +78,7 @@
 
   &:disabled {
     background-color: $buttonDisableBG;
+    color: $primaryColor1;
     cursor: auto;
   }
 }
@@ -117,4 +118,14 @@
   font-weight: 700;
   line-height: 150%;
   text-align: center;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
 }

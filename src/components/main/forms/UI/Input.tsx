@@ -13,7 +13,7 @@ type TInput = {
   max?: string;
   defaultValue?: string;
   required?: boolean;
-  reference: React.RefObject<HTMLInputElement>;
+  reference?: React.RefObject<HTMLInputElement>;
 };
 
 export default function Input({

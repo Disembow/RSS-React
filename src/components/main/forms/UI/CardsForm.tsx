@@ -2,11 +2,19 @@ import React from 'react';
 import CardsInfoRow from '../../home/UI/CardsInfo';
 import { TFormCard } from '../../../../types/props-types';
 import imageDefault from '../../../../assets/image_default.webp';
+import checkmarkTrue from '../../../../assets/checkbox-checked.svg';
+import checkmarkFalse from '../../../../assets/checkbox.svg';
+
+type TImage = {
+  src: string;
+};
+
+const CheckboxChecked = ({ src }: TImage) => <img src={src} alt="notifications" width={'20'}></img>;
 
 export default function CardsForm(props: TFormCard) {
   const cards: JSX.Element[] = [];
 
-  for (let i = 0; i < props.number; i++) {
+  for (let i = 0; i < props.number!; i++) {
     cards.push(
       <div className="card__item form__card" key={i + 1}>
         <h3>Card #{i + 1}</h3>
@@ -17,18 +25,28 @@ export default function CardsForm(props: TFormCard) {
         />
         <CardsInfoRow
           title="Full name"
-          info={props.radio[i] + ' ' + props.firstName[i] + ' ' + props.lastName[i]}
+          info={props.data[i].radio + ' ' + props.data[i].firstName + ' ' + props.data[i].lastName}
           data-testid="fullname"
         />
-        <CardsInfoRow title="Delivery" info={props.date[i]} data-testid="delivery-date" />
+        <CardsInfoRow
+          title="Delivery"
+          info={props.data[i].deliveryDate}
+          data-testid="delivery-date"
+        />
         <CardsInfoRow
           title="Post provider"
-          info={props.postService[i]}
+          info={props.data[i].postProvider}
           data-testid="post-provider"
         />
         <CardsInfoRow
           title="Email notification"
-          info={props.notification[i]}
+          info={
+            props.data[i].checkbox ? (
+              <CheckboxChecked src={checkmarkTrue} />
+            ) : (
+              <CheckboxChecked src={checkmarkFalse} />
+            )
+          }
           data-testid="email-notice"
         />
         {props.children}
