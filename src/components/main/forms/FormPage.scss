@@ -129,3 +129,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 20;
 }
+
+.error__message {
+  color: $errorMessage;
+  font-size: 0.8rem;
+}

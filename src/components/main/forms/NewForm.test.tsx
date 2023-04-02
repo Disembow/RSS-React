@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Input from './Form';
+import NewForm from './NewForm';
 
 const mockNames = {
   firstName: ['Jack', 'John'],
@@ -9,14 +9,14 @@ const mockNames = {
 };
 
 test('To have number of inputs', () => {
-  render(<Input />);
+  render(<NewForm />);
 
   const form = screen.getAllByRole('textbox');
   expect(form).to.have.length(2);
 });
 
 test('To have number of inputs', () => {
-  render(<Input />);
+  render(<NewForm />);
 
   const form = screen.getAllByRole('textbox');
   const firstNameInput = form[0];
@@ -28,7 +28,7 @@ test('To have number of inputs', () => {
 
 test('upload file', async () => {
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
-  render(<Input />);
+  render(<NewForm />);
 
   const input = screen.getByTestId('avatar');
   await userEvent.upload(input, file);

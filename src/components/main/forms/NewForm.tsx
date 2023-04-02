@@ -22,7 +22,7 @@ export default function NewForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors /*, isValid*/ },
   } = useForm<TNewForm>({
     mode: 'onChange',
     defaultValues: {
@@ -65,7 +65,6 @@ export default function NewForm() {
 
   const clickHandler = function () {
     setVisible((prev) => !prev);
-    console.log(visible);
   };
 
   return (
@@ -111,7 +110,7 @@ export default function NewForm() {
               minLength: { value: 2, message: 'It needs min 2 characters' },
               pattern: {
                 value: /^[A-Z][a-z]{1,20}$/,
-                message: 'The first character needs to be capitalized',
+                message: 'Only first character needs to be capitalized',
               },
             })}
             className="light-block"
@@ -120,8 +119,8 @@ export default function NewForm() {
             autoComplete="off"
             id="first-name"
           />
-          <p>{errors.firstName?.message}</p>
         </div>
+        <p className="error__message">{errors.firstName?.message}</p>
 
         <div className="form__item">
           <label className="form__label" htmlFor={'last-name'}>
@@ -133,7 +132,7 @@ export default function NewForm() {
               minLength: { value: 2, message: 'It needs min 2 characters' },
               pattern: {
                 value: /^[A-Z][a-z]{1,20}$/,
-                message: 'The first character needs to be capitalized',
+                message: 'Only first character needs to be capitalized',
               },
             })}
             className="light-block"
@@ -142,8 +141,8 @@ export default function NewForm() {
             autoComplete="off"
             id="last-name"
           />
-          <p>{errors.lastName?.message}</p>
         </div>
+        <p className="error__message">{errors.lastName?.message}</p>
 
         <div className="form__item">
           <label className="form__label" htmlFor={'delivery-date'}>
@@ -187,19 +186,28 @@ export default function NewForm() {
             Upload your image:
           </label>
           <input
-            {...register('avatar', { required: 'Please insert an image file' })}
+            {...register('avatar', {
+              required: 'Please insert an image file',
+              validate: {
+                notEmpty: (e) => e.length > 0 || 'Please add the file',
+                // fileType: (e) =>
+                //   (e.length > 0 && e[0].type.startsWith('image')) || 'Must be an image type',
+              },
+            })}
             className="input__file"
             type="file"
             id="avatar"
             data-testid="avatar"
+            onChange={(e) => console.log(e.target.files![0].type.startsWith('image'))}
           />
         </div>
+        {errors.avatar ? <p className="error__message">{errors.avatar.message}</p> : <></>}
 
         <input
           className="button button__submit"
           type="submit"
           value={'Submit'}
-          disabled={!isValid}
+          // disabled={!isValid}
         />
       </form>
 
