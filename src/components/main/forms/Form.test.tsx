@@ -1,34 +1,36 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import NewForm from './NewForm';
-
-const mockNames = {
-  firstName: ['Jack', 'John'],
-  lastName: ['Crow', 'Snow'],
-};
+import Form from './Form';
+import { act } from 'react-dom/test-utils';
 
 test('To have number of inputs', () => {
-  render(<NewForm />);
+  render(<Form />);
 
   const form = screen.getAllByRole('textbox');
   expect(form).to.have.length(2);
 });
 
-test('To have number of inputs', () => {
-  render(<NewForm />);
+test('To have errors after input wrong names', () => {
+  render(<Form />);
 
   const form = screen.getAllByRole('textbox');
-  const firstNameInput = form[0];
-  const lastNameInput = form[1];
+  const firstNameInput = form[0] as HTMLInputElement;
+  const lastNameInput = form[1] as HTMLInputElement;
 
-  fireEvent.change(firstNameInput, { target: { value: mockNames.firstName[0] } });
-  fireEvent.change(lastNameInput, { target: { value: mockNames.lastName[0] } });
+  act(() => {
+    fireEvent.change(firstNameInput, { target: { value: 'jack' } });
+    fireEvent.change(lastNameInput, { target: { value: 'c' } });
+    fireEvent.submit(screen.getByRole('button'));
+  });
+
+  expect(screen.queryByText(/Only first character needs to be capitalized/i));
+  expect(screen.queryByText(/It needs min 2 characters/i));
 });
 
 test('upload file', async () => {
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
-  render(<NewForm />);
+  render(<Form />);
 
   const input = screen.getByTestId('avatar');
   await userEvent.upload(input, file);

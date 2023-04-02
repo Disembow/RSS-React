@@ -1,261 +1,212 @@
-import React, { createRef, FormEvent, RefObject } from 'react';
-import { TProps, TState } from '../../../types/props-types';
-import Select from './UI/Select';
-import imageDefault from '../../../assets/image_default.webp';
-import checkmarkTrue from '../../../assets/checkbox-checked.svg';
-import checkmarkFalse from '../../../assets/checkbox.svg';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Options from './UI/Options';
+import CardsForm from './UI/CardsForm';
+import CreateSumbitMessage from './UI/SubmitMessage';
 import Button from './UI/Button';
-import Input from './UI/Input';
 
-export default class Form extends React.Component {
-  form: RefObject<HTMLFormElement>;
-  radio1: RefObject<HTMLInputElement>;
-  radio2: RefObject<HTMLInputElement>;
-  inputName: RefObject<HTMLInputElement>;
-  inputSecName: RefObject<HTMLInputElement>;
-  inputDate: RefObject<HTMLInputElement>;
-  selector: RefObject<HTMLSelectElement>;
-  checkbox: RefObject<HTMLInputElement>;
-  imageInput: RefObject<HTMLInputElement>;
-  imagePreview: RefObject<HTMLImageElement>;
-  submitPopup: RefObject<HTMLDivElement>;
-  defaultDeliveryDate: string;
-  defaultPostProvider: string;
-  PostProviders: string[];
-  withNotification: JSX.Element;
-  withoutNotification: JSX.Element;
+export type TForm = {
+  firstName: string;
+  lastName: string;
+  radio: string;
+  deliveryDate: string;
+  postProvider: string;
+  checkbox: boolean;
+  avatar: FileList[];
+};
 
-  state: TState;
+const defaultDeliveryDate = new Date().toISOString().slice(0, 10);
+const maxDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
 
-  constructor(props: TProps) {
-    super(props);
-    this.handleImages = this.handleImages.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.form = createRef();
-    this.radio1 = createRef();
-    this.radio2 = createRef();
-    this.inputName = createRef();
-    this.inputSecName = createRef();
-    this.inputDate = createRef();
-    this.selector = createRef();
-    this.checkbox = createRef();
-    this.imageInput = createRef();
-    this.imagePreview = createRef();
-    this.submitPopup = createRef();
-    this.defaultDeliveryDate = new Date().toISOString().slice(0, 10);
-    this.defaultPostProvider = 'DHL';
-    this.PostProviders = ['DHL', 'UPS', 'DPD'];
-    this.withNotification = <img src={checkmarkFalse} alt="not checked" width="20" />;
-    this.withoutNotification = <img src={checkmarkTrue} alt="checked" width="20" />;
-
-    this.state = {
-      cardsCount: 0,
-      radioCurrent: '',
-      radio: [],
+export default function Form() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TForm>({
+    mode: 'onChange',
+    defaultValues: {
+      radio: '',
       firstName: '',
-      firstNameList: [],
       lastName: '',
-      lastNameList: [],
-      image: '',
-      imageList: [],
-      delivery: '',
-      deliveryList: [],
-      notification: <></>,
-      notificationList: [],
-      postProvider: '',
-      postProviderList: [],
-    };
-  }
+      deliveryDate: defaultDeliveryDate,
+      postProvider: 'DHL',
+      checkbox: false,
+    },
+  });
 
-  radioCurrState() {
-    if (this.radio1.current?.checked) {
-      return this.radio1.current.value;
-    } else if (this.radio2.current?.checked) {
-      return this.radio2.current.value;
-    }
-    return '';
-  }
+  const [cardImageList, setСardImageList] = useState<string[]>([]);
+  const [card, setCard] = useState<TForm[]>([]);
 
-  handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  const onSubmit = (data: TForm) => {
+    const file = data.avatar[0];
+    const reader = new FileReader();
 
-    this.setState(() => {
-      const radio = [...this.state.radio, this.radioCurrState()];
-      const firstNameList = [...this.state.firstNameList, this.inputName.current?.value];
-      const lastNameList = [...this.state.lastNameList, this.inputSecName.current?.value];
-      const imageList = [...this.state.imageList, this.state.image];
-      const notificationList = [
-        ...this.state.notificationList,
-        this.checkbox.current?.checked ? this.withoutNotification : this.withNotification,
-      ];
-      const deliveryList = [...this.state.deliveryList, this.inputDate.current?.value];
-      const postProviderList = [...this.state.postProviderList, this.selector.current?.value];
+    if (file instanceof File) {
+      reader.readAsDataURL(file);
 
-      return {
-        cardsCount: this.state.cardsCount + 1,
-        radio,
-        firstNameList,
-        lastNameList,
-        imageList,
-        notificationList,
-        deliveryList,
-        postProviderList,
+      reader.onload = () => {
+        const image = reader.result;
+        if (typeof image === 'string') {
+          const newState = [...cardImageList, image];
+          setСardImageList(newState);
+        }
       };
-    });
-
-    setTimeout(() => {
-      this.submitPopup.current?.remove();
-      if (this.form.current && this.imagePreview.current) {
-        this.form.current.reset();
-        this.imagePreview.current.src = imageDefault;
-      }
-    }, 3000);
-  }
-
-  handleImages() {
-    if (this.imageInput.current?.files) {
-      const file = this.imageInput.current?.files[0];
-      const reader = new FileReader();
-
-      if (file instanceof File) {
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          const image = reader.result;
-          if (this.imagePreview.current && typeof image === 'string') {
-            this.imagePreview.current.src = image;
-            this.setState({ image: image });
-          }
-        };
-
-        reader.onerror = () => {
-          console.log(reader.error);
-        };
-      }
     }
-  }
 
-  render() {
-    return (
-      <>
-        <form className="order__form" onSubmit={this.handleSubmit} ref={this.form}>
-          <div className="form__item form__item_radio">
-            <Input
-              labelText="How to address you:"
-              className="form__checkbox"
-              type="radio"
-              reference={this.radio1}
-              value="Mr."
-              name="gender"
-              id="gender"
-            />
-            <Input
-              labelText=""
-              className="form__checkbox"
-              type="radio"
-              reference={this.radio2}
-              value="Ms."
-              name="gender"
-              id="gender"
-            />
-          </div>
+    setCard([...card, data]);
 
-          <div className="form__item">
-            <Input
-              labelText="First name:"
-              className="light-block"
-              type="text"
-              reference={this.inputName}
-              placeholder="Enter your first name"
-              autoComplete="off"
-              name="first-name"
-              id="first-name"
-              required
-            />
-          </div>
+    setVisible((prev) => !prev);
 
-          <div className="form__item">
-            <Input
-              labelText="Last name:"
-              className="light-block"
-              type="text"
-              reference={this.inputSecName}
-              placeholder="Enter your last name"
-              autoComplete="off"
-              name="last-name"
-              id="last-name"
-              required
-            />
-          </div>
+    reset();
+  };
 
-          <div className="form__item">
-            <Input
-              labelText="Delivery date:"
-              className="light-block"
-              type="date"
-              reference={this.inputDate}
-              placeholder="Enter your last name"
-              autoComplete="off"
-              name="delivery-date"
-              id="delivery-date"
-              min={new Date().toISOString().slice(0, 10)}
-              max={`${new Date().getFullYear() + 1}${new Date().toISOString().slice(4, 10)}`}
-              defaultValue={this.defaultDeliveryDate}
-              required
-            />
-          </div>
+  const [visible, setVisible] = useState(false);
 
-          <div className="form__item">
-            <Select
-              labelText="Post service:"
-              value={this.PostProviders}
-              className={'light-block'}
-              name="post-select"
-              id="post-select"
-              reference={this.selector}
-            />
-          </div>
+  const clickHandler = function () {
+    setVisible((prev) => !prev);
+  };
 
-          <div className="form__item">
-            <Input
-              labelText="Email notifications:"
-              className="form__checkbox"
-              type="checkbox"
-              reference={this.checkbox}
-              name="data-agree-box"
-              id="data-agree-box"
-            />
-          </div>
+  return (
+    <>
+      <form className="order__form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="form__item form__item_radio">
+          <label className="form__label" htmlFor={'first-name'}>
+            How to address you:
+          </label>
+          <input
+            {...register('radio')}
+            className="form__checkbox"
+            type="radio"
+            value="Mr."
+            id="gender"
+          />
+          Mr.
+          <input
+            {...register('radio')}
+            className="form__checkbox"
+            type="radio"
+            value="Ms."
+            id="gender"
+          />
+          Ms.
+          <input
+            {...register('radio')}
+            className="form__checkbox"
+            type="radio"
+            value=""
+            id="gender"
+          />
+          Other
+        </div>
 
-          <div className="form__item">
-            <label className="form__label" htmlFor="avatar">
-              Upload your image:
-            </label>
-            <input
-              className="input__file"
-              type="file"
-              name="avatar"
-              id="avatar"
-              data-testid="avatar"
-              ref={this.imageInput}
-              onChange={this.handleImages}
-              required
-            />
-          </div>
+        <div className="form__item">
+          <label className="form__label" htmlFor={'first-name'}>
+            First name:
+          </label>
+          <input
+            {...register('firstName', {
+              required: 'This is required field',
+              minLength: { value: 2, message: 'It needs min 2 characters' },
+              pattern: {
+                value: /^[A-Z][a-z]{1,20}$/,
+                message: 'Only first character needs to be capitalized',
+              },
+            })}
+            className="light-block"
+            type="text"
+            placeholder="Enter your first name"
+            autoComplete="off"
+            id="first-name"
+          />
+        </div>
+        <p className="error__message">{errors.firstName?.message}</p>
 
-          <div className="image-preview__wrapper">
-            <img
-              className="image-preview__item"
-              src={imageDefault}
-              ref={this.imagePreview}
-              alt="input file preview"
-            />
-          </div>
+        <div className="form__item">
+          <label className="form__label" htmlFor={'last-name'}>
+            Last name:
+          </label>
+          <input
+            {...register('lastName', {
+              required: 'This is required field',
+              minLength: { value: 2, message: 'It needs min 2 characters' },
+              pattern: {
+                value: /^[A-Z][a-z]{1,20}$/,
+                message: 'Only first character needs to be capitalized',
+              },
+            })}
+            className="light-block"
+            type="text"
+            placeholder="Enter your last name"
+            autoComplete="off"
+            id="last-name"
+          />
+        </div>
+        <p className="error__message">{errors.lastName?.message}</p>
 
-          <Button>Submit</Button>
-        </form>
-      </>
-    );
-  }
+        <div className="form__item">
+          <label className="form__label" htmlFor={'delivery-date'}>
+            Delivery date:
+          </label>
+          <input
+            {...register('deliveryDate', { required: true })}
+            className="light-block"
+            type="date"
+            placeholder="Enter your last name"
+            autoComplete="off"
+            id="delivery-date"
+            min={defaultDeliveryDate}
+            max={maxDate.toISOString().slice(0, 10)}
+          />
+        </div>
+
+        <div className="form__item">
+          <label className="form__label" htmlFor="post-select">
+            Post service:
+          </label>
+          <select {...register('postProvider')} className="light-block" id="post-select">
+            <Options value={['DHL', 'UPS', 'DPD']} />
+          </select>
+        </div>
+
+        <div className="form__item">
+          <label className="form__label" htmlFor="checkbox">
+            Email notifications:
+          </label>
+          <input
+            {...register('checkbox')}
+            className="form__checkbox"
+            type="checkbox"
+            id="checkbox"
+          />
+        </div>
+
+        <div className="form__item">
+          <label className="form__label" htmlFor="avatar">
+            Upload your image:
+          </label>
+          <input
+            {...register('avatar', {
+              required: 'Please insert an image file',
+              validate: {
+                notEmpty: (e) => e.length > 0 || 'Please add the file',
+              },
+            })}
+            className="input__file"
+            type="file"
+            id="avatar"
+            data-testid="avatar"
+          />
+        </div>
+        {errors.avatar ? <p className="error__message">{errors.avatar.message}</p> : <></>}
+
+        <Button />
+      </form>
+
+      <CardsForm number={cardImageList.length} logo={cardImageList} data={card}>
+        {visible ? <CreateSumbitMessage callback={clickHandler} /> : <></>}
+      </CardsForm>
+    </>
+  );
 }

@@ -20,7 +20,7 @@ export default function CardsForm(props: TFormCard) {
         <h3>Card #{i + 1}</h3>
         <img
           className="form__card_image"
-          src={props.logo[i] !== '' ? props.logo[i] : imageDefault}
+          src={props.logo![i] !== '' ? props.logo![i] : imageDefault}
           alt="logo"
         />
         <CardsInfoRow

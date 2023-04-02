@@ -1,4 +1,4 @@
-import { TNewForm } from '../components/main/forms/NewForm';
+import { TForm } from '../components/main/forms/Form';
 
 export type TProps = {
   children?: string;
@@ -48,15 +48,9 @@ export type TState = {
 
 export type TFormCard = {
   number?: number;
-  logo: string[];
-  radio?: string[];
-  firstName?: string[];
-  lastName?: string[];
-  date?: string[];
-  postService?: string[];
-  notification?: JSX.Element[];
+  logo?: string[];
   children?: JSX.Element;
-  data: TNewForm[];
+  data: TForm[];
 };
 
 export type TOption = {
