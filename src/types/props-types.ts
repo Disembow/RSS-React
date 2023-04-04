@@ -46,3 +46,9 @@ export type TOption = {
 export type TImage = {
   src: string;
 };
+
+export type TInput = {
+  type: string;
+  placeholder: string;
+  'data-testid': string;
+};
