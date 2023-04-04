@@ -1,23 +1,14 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Footer from '../footer/Footer';
+import Header from '../header/Header';
 
 export default function RootLayout() {
   return (
-    <div className="root__layout">
-      <header>
-        <nav className="navigation">
-          <NavLink to="/" className={'navigation__item'}>
-            Home
-          </NavLink>
-          <NavLink to="forms" className={'navigation__item'}>
-            Forms
-          </NavLink>
-          <NavLink to="about" className={'navigation__item'}>
-            About Us
-          </NavLink>
-        </nav>
-      </header>
+    <>
+      <Header />
       <Outlet />
-    </div>
+      <Footer />
+    </>
   );
 }

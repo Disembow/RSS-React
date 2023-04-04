@@ -15,9 +15,10 @@ export type TMusic = {
   albums: TAlbums[];
 };
 
-type TAlbums = {
+export type TAlbums = {
   id: number;
   artist: string;
+  country: string;
   album: string;
   year: number;
   rating: number;
