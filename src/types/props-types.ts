@@ -3,8 +3,6 @@ import { TForm } from '../components/main/forms/Form';
 export type TProps = {
   children?: string;
   database?: TMusic;
-  value?: TMusic | string;
-  reference?: React.RefObject<HTMLDivElement>;
 };
 
 export type TCardInfo = {
@@ -28,24 +26,6 @@ type TAlbums = {
   cover: string;
 };
 
-export type TState = {
-  cardsCount: number;
-  radioCurrent: string;
-  radio: string[];
-  firstName: string;
-  firstNameList: string[];
-  lastName: string;
-  lastNameList: string[];
-  image: string;
-  imageList: string[];
-  delivery: string;
-  deliveryList: string[];
-  notification: JSX.Element;
-  notificationList: JSX.Element[];
-  postProvider: string;
-  postProviderList: string[];
-};
-
 export type TFormCard = {
   number?: number;
   logo?: string[];
@@ -61,4 +41,8 @@ export type TOption = {
   'data-testid'?: string;
   className?: string;
   reference?: React.RefObject<HTMLSelectElement>;
+};
+
+export type TImage = {
+  src: string;
 };

@@ -1,15 +1,12 @@
 import React from 'react';
 import CardsInfoRow from '../../home/UI/CardsInfo';
 import { TFormCard } from '../../../../types/props-types';
+import { TImage } from '../../../../types/props-types';
 import imageDefault from '../../../../assets/image_default.webp';
 import checkmarkTrue from '../../../../assets/checkbox-checked.svg';
 import checkmarkFalse from '../../../../assets/checkbox.svg';
 
-type TImage = {
-  src: string;
-};
-
-const CheckboxChecked = ({ src }: TImage) => <img src={src} alt="notifications" width={'20'}></img>;
+const CheckboxChecked = ({ src }: TImage) => <img src={src} alt="notifications" width={'20'} />;
 
 export default function CardsForm(props: TFormCard) {
   const cards: JSX.Element[] = [];
