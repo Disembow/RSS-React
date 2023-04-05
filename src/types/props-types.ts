@@ -1,5 +1,12 @@
+import { UseFormRegisterReturn } from 'react-hook-form';
+
 export type TProps = {
   children?: string;
+  className?: string;
+  type?: string;
+  value?: string;
+  id?: string;
+  register?: UseFormRegisterReturn;
   database?: TMusic;
 };
 

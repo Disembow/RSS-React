@@ -32,7 +32,7 @@ test('upload file', async () => {
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
   render(<Form />);
 
-  const input = screen.getByTestId('avatar');
+  const input = screen.getByTitle('avatar');
   await userEvent.upload(input, file);
 
   if (input instanceof HTMLInputElement && input.files) {

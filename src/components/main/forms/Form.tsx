@@ -5,6 +5,8 @@ import CardsForm from './UI/CardsForm';
 import CreateSumbitMessage from './UI/SubmitMessage';
 import Button from './UI/Button';
 import { TForm } from '../../../types/props-types';
+import Input from './UI/Input';
+import Radio from './UI/Radio';
 
 const defaultDeliveryDate = new Date().toISOString().slice(0, 10);
 const maxDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
@@ -36,7 +38,6 @@ export default function Form() {
 
     if (file instanceof File) {
       reader.readAsDataURL(file);
-
       reader.onload = () => {
         const image = reader.result;
         if (typeof image === 'string') {
@@ -47,7 +48,6 @@ export default function Form() {
     }
 
     setCard([...card, data]);
-
     setVisible((prev) => !prev);
 
     reset();
@@ -59,6 +59,37 @@ export default function Form() {
     setVisible((prev) => !prev);
   };
 
+  const title = register('radio');
+
+  const firstname = register('firstName', {
+    required: 'This is required field',
+    minLength: { value: 2, message: 'It needs min 2 characters' },
+    pattern: {
+      value: /^[A-Z][a-z]{1,20}$/,
+      message: 'Only first character needs to be capitalized',
+    },
+  });
+
+  const lastname = register('lastName', {
+    required: 'This is required field',
+    minLength: { value: 2, message: 'It needs min 2 characters' },
+    pattern: {
+      value: /^[A-Z][a-z]{1,20}$/,
+      message: 'Only first character needs to be capitalized',
+    },
+  });
+
+  const deliveryDate = register('deliveryDate', { required: true });
+
+  const checkbox = register('checkbox');
+
+  const avatar = register('avatar', {
+    required: 'Please insert an image file',
+    validate: {
+      notEmpty: (e) => e.length > 0 || 'Please add the file',
+    },
+  });
+
   return (
     <>
       <form className="order__form" onSubmit={handleSubmit(onSubmit)}>
@@ -66,91 +97,43 @@ export default function Form() {
           <label className="form__label" htmlFor={'first-name'}>
             How to address you:
           </label>
-          <input
-            {...register('radio')}
-            className="form__checkbox"
-            type="radio"
-            value="Mr."
-            id="gender"
-          />
-          Mr.
-          <input
-            {...register('radio')}
-            className="form__checkbox"
-            type="radio"
-            value="Ms."
-            id="gender"
-          />
-          Ms.
-          <input
-            {...register('radio')}
-            className="form__checkbox"
-            type="radio"
-            value=""
-            id="gender"
-          />
-          Other
+          <Radio register={title} className="form__checkbox" type="radio" value="Mr." id="gender" />
+          <Radio register={title} className="form__checkbox" type="radio" value="Ms." id="gender" />
+          <Radio register={title} className="form__checkbox" type="radio" value="" id="gender" />
         </div>
 
-        <div className="form__item">
-          <label className="form__label" htmlFor={'first-name'}>
-            First name:
-          </label>
-          <input
-            {...register('firstName', {
-              required: 'This is required field',
-              minLength: { value: 2, message: 'It needs min 2 characters' },
-              pattern: {
-                value: /^[A-Z][a-z]{1,20}$/,
-                message: 'Only first character needs to be capitalized',
-              },
-            })}
-            className="light-block"
-            type="text"
-            placeholder="Enter your first name"
-            autoComplete="off"
-            id="first-name"
-          />
-        </div>
+        <Input
+          register={firstname}
+          className={'light-block'}
+          type={'text'}
+          placeholder={'Enter your first name'}
+          autoComplete={'off'}
+          id={'first-name'}
+          labelText={'First name:'}
+        />
         <p className="error__message">{errors.firstName?.message}</p>
 
-        <div className="form__item">
-          <label className="form__label" htmlFor={'last-name'}>
-            Last name:
-          </label>
-          <input
-            {...register('lastName', {
-              required: 'This is required field',
-              minLength: { value: 2, message: 'It needs min 2 characters' },
-              pattern: {
-                value: /^[A-Z][a-z]{1,20}$/,
-                message: 'Only first character needs to be capitalized',
-              },
-            })}
-            className="light-block"
-            type="text"
-            placeholder="Enter your last name"
-            autoComplete="off"
-            id="last-name"
-          />
-        </div>
+        <Input
+          register={lastname}
+          className={'light-block'}
+          type={'text'}
+          placeholder={'Enter your last name'}
+          autoComplete={'off'}
+          id={'last-name'}
+          labelText={'Last name:'}
+        />
         <p className="error__message">{errors.lastName?.message}</p>
 
-        <div className="form__item">
-          <label className="form__label" htmlFor={'delivery-date'}>
-            Delivery date:
-          </label>
-          <input
-            {...register('deliveryDate', { required: true })}
-            className="light-block"
-            type="date"
-            placeholder="Enter your last name"
-            autoComplete="off"
-            id="delivery-date"
-            min={defaultDeliveryDate}
-            max={maxDate.toISOString().slice(0, 10)}
-          />
-        </div>
+        <Input
+          register={deliveryDate}
+          className={'light-block'}
+          type={'date'}
+          autoComplete={'off'}
+          id={'delivery-date'}
+          min={defaultDeliveryDate}
+          max={maxDate.toISOString().slice(0, 10)}
+          labelText={'Delivery date:'}
+        />
 
         <div className="form__item">
           <label className="form__label" htmlFor="post-select">
@@ -161,36 +144,23 @@ export default function Form() {
           </select>
         </div>
 
-        <div className="form__item">
-          <label className="form__label" htmlFor="checkbox">
-            Email notifications:
-          </label>
-          <input
-            {...register('checkbox')}
-            className="form__checkbox"
-            type="checkbox"
-            id="checkbox"
-          />
-        </div>
+        <Input
+          register={checkbox}
+          className={'form__checkbox'}
+          type={'checkbox'}
+          id={'checkbox'}
+          labelText={'Email notifications:'}
+        />
 
-        <div className="form__item">
-          <label className="form__label" htmlFor="avatar">
-            Upload your image:
-          </label>
-          <input
-            {...register('avatar', {
-              required: 'Please insert an image file',
-              validate: {
-                notEmpty: (e) => e.length > 0 || 'Please add the file',
-              },
-            })}
-            className="input__file"
-            type="file"
-            id="avatar"
-            data-testid="avatar"
-            accept=".jpg, .jpeg, .png, .gif, .bmp, .webp, .svg"
-          />
-        </div>
+        <Input
+          register={avatar}
+          className={'input__file'}
+          type={'file'}
+          id={'avatar'}
+          title={'avatar'}
+          accept={'.jpg, .jpeg, .png, .gif, .bmp, .webp, .svg'}
+          labelText={'Upload your image:'}
+        />
         {errors.avatar ? <p className="error__message">{errors.avatar.message}</p> : <></>}
 
         <Button />
