@@ -4,16 +4,7 @@ import Options from './UI/Options';
 import CardsForm from './UI/CardsForm';
 import CreateSumbitMessage from './UI/SubmitMessage';
 import Button from './UI/Button';
-
-export type TForm = {
-  firstName: string;
-  lastName: string;
-  radio: string;
-  deliveryDate: string;
-  postProvider: string;
-  checkbox: boolean;
-  avatar: FileList[];
-};
+import { TForm } from '../../../types/props-types';
 
 const defaultDeliveryDate = new Date().toISOString().slice(0, 10);
 const maxDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());

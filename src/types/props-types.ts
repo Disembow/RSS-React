@@ -1,5 +1,3 @@
-import { TForm } from '../components/main/forms/Form';
-
 export type TProps = {
   children?: string;
   database?: TMusic;
@@ -52,4 +50,14 @@ export type TInput = {
   type: string;
   placeholder: string;
   'data-testid': string;
+};
+
+export type TForm = {
+  firstName: string;
+  lastName: string;
+  radio: string;
+  deliveryDate: string;
+  postProvider: string;
+  checkbox: boolean;
+  avatar: FileList[];
 };
