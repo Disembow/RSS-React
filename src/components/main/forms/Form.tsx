@@ -197,6 +197,7 @@ export default function Form() {
             type="file"
             id="avatar"
             data-testid="avatar"
+            accept=".jpg, .jpeg, .png, .gif, .bmp, .webp, .svg"
           />
         </div>
         {errors.avatar ? <p className="error__message">{errors.avatar.message}</p> : <></>}
