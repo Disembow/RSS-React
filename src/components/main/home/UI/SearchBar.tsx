@@ -37,7 +37,7 @@ export default function SearchBar(props: TInput) {
       })
       .then((data) => {
         const result = data.filter((album: TAlbums) => {
-          return album && album.artist && album.artist.toLowerCase().includes(input);
+          return album && album.artist && album.artist.toLowerCase().includes(input.toLowerCase());
         });
         console.log(result);
       })
