@@ -3,7 +3,7 @@ import './Cards.scss';
 import { TAlbums } from '../../../../types/props-types';
 import CardsInfoRow from './CardsInfo';
 import DataLoaderImitation from './DataLoaderImitation';
-import fetchAPI from '../../../utils/fetchAPI';
+import fetchAPI from '../../../utils/fetchAPIbyDefault';
 
 export default function Cards() {
   const [albums, setAlbums] = useState<TAlbums[]>([]);

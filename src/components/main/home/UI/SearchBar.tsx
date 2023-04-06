@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { TInput } from '../../../../types/props-types';
+import { TInput, TAlbums } from '../../../../types/props-types';
 
 export default function SearchBar(props: TInput) {
   const key = 'RSTaskMessage';
@@ -28,7 +28,23 @@ export default function SearchBar(props: TInput) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(input);
+    fetch('http://localhost:3000/catalog')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Couldn't fetch the data from that source");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const result = data.filter((album: TAlbums) => {
+          return album && album.artist && album.artist.toLowerCase().includes(input);
+        });
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // .finally(() => setIsLoading((prev: boolean) => !prev));
   };
 
   return (
