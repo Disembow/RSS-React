@@ -43,4 +43,18 @@
   background-size: 50%;
   background-repeat: no-repeat;
   background-image: url('../../../assets/search-icon.svg');
+  border: none;
+  outline: none;
+  background-color: transparent;
+  transition: linear 0.2s;
+
+  &:hover {
+    transform: scale(1.08);
+    transition: linear 0.2s;
+  }
+
+  &:active {
+    transform: scale(1);
+    transition: linear 0.01s;
+  }
 }

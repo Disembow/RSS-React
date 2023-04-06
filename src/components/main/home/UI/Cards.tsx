@@ -3,36 +3,20 @@ import './Cards.scss';
 import { TAlbums } from '../../../../types/props-types';
 import CardsInfoRow from './CardsInfo';
 import DataLoaderImitation from './DataLoaderImitation';
+import fetchAPI from '../../../utils/fetchAPI';
 
 export default function Cards() {
-  const [albums, setAlbums] = useState<TAlbums[]>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [albums, setAlbums] = useState<TAlbums[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      fetch('http://localhost:3000/catalog')
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Couldn't fetch the data from that source");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setAlbums(data);
-          setIsLoading((prev) => !prev);
-          setError(null);
-        })
-        .catch((error) => {
-          setError(error.message);
-          setIsLoading((prev) => !prev);
-        });
-    }, 1500);
+    setTimeout(() => fetchAPI(setAlbums, setIsLoading, setError), 1100);
   }, []);
 
   return (
     <div className="cards__wrapper" data-testid="main-cards-list">
-      {error && <div>{error}</div>}
+      {error && <div className="error__message_fetch">{error}</div>}
       {isLoading && <DataLoaderImitation />}
       {albums &&
         albums.map((e) => {
