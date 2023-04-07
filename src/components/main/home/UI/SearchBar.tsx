@@ -36,7 +36,7 @@ export default function SearchBar(props: TInput) {
         return res.json();
       })
       .then((data) => {
-        const result = data.filter((album: TAlbums) => {
+        const result: TAlbums[] = data.filter((album: TAlbums) => {
           return album && album.artist && album.artist.toLowerCase().includes(input.toLowerCase());
         });
         console.log(result);

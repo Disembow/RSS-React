@@ -1,7 +1,7 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 export type TProps = {
-  children?: string;
+  children?: string | React.ReactNode;
   className?: string;
   type?: string;
   value?: string;
