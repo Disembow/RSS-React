@@ -1,18 +1,27 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { TInput, TAlbums } from '../../../../types/props-types';
+import Cards from './Cards';
+import fetchAPI from '../../../utils/fetchAPIbyDefault';
 
 export default function SearchBar(props: TInput) {
   const key = 'RSTaskMessage';
 
-  const [input, setInput] = useState(localStorage.getItem(key) || '');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const inputValue = inputRef.current;
-    const req = localStorage.getItem(key);
+  const [input, setInput] = useState(localStorage.getItem(key) || '');
+  const [albums, setAlbums] = useState<TAlbums[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<null | string>(null);
 
-    if (req) {
-      setInput(req);
+  useEffect(() => {
+    fetchAPI(setAlbums, setIsLoading, setError, input);
+
+    const inputValue = inputRef.current;
+    const localData = localStorage.getItem(key);
+
+    if (localData && inputValue) {
+      setInput(localData);
+      inputValue.value = localData;
     }
 
     return () => {
@@ -20,45 +29,32 @@ export default function SearchBar(props: TInput) {
         localStorage.setItem(key, inputValue.value);
       }
     };
-  }, []);
-
-  const setLSData = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInput(e.target.value);
-  };
+  }, [input]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    fetch('http://localhost:3000/catalog')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Couldn't fetch the data from that source");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        const result: TAlbums[] = data.filter((album: TAlbums) => {
-          return album && album.artist && album.artist.toLowerCase().includes(input.toLowerCase());
-        });
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // .finally(() => setIsLoading((prev: boolean) => !prev));
+
+    const inputValue = inputRef.current;
+    if (inputValue) setInput(inputValue.value);
+
+    setIsLoading((prev: boolean) => !prev);
+
+    fetchAPI(setAlbums, setIsLoading, setError, input);
   };
 
   return (
-    <form className="search light-block" onSubmit={handleSubmit}>
-      <input
-        className="search__input"
-        type={props.type}
-        placeholder={props.placeholder}
-        value={input}
-        onChange={setLSData}
-        data-testid={props['data-testid']}
-        ref={inputRef}
-      />
-      <button type="submit" className="search__icon" data-testid="main-search-icon"></button>
-    </form>
+    <>
+      <form className="search light-block" onSubmit={handleSubmit}>
+        <input
+          className="search__input"
+          type={props.type}
+          placeholder={props.placeholder}
+          data-testid={props['data-testid']}
+          ref={inputRef}
+        />
+        <button type="submit" className="search__icon" data-testid="main-search-icon"></button>
+      </form>
+      <Cards albums={albums} isLoading={isLoading} error={error} />
+    </>
   );
 }

@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Cards.scss';
 import { TAlbums } from '../../../../types/props-types';
 import CardsInfoRow from './CardsInfo';
 import DataLoaderImitation from './DataLoaderImitation';
-import fetchAPI from '../../../utils/fetchAPIbyDefault';
 
-export default function Cards() {
-  const [albums, setAlbums] = useState<TAlbums[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<null | string>(null);
+type TCards = {
+  albums: TAlbums[];
+  isLoading: boolean;
+  error: string | null;
+};
 
-  useEffect(() => {
-    setTimeout(() => fetchAPI(setAlbums, setIsLoading, setError), 1100);
-  }, []);
-
+export default function Cards({ albums, isLoading, error }: TCards) {
   return (
     <div className="cards__wrapper" data-testid="main-cards-list">
       {error && <div className="error__message_fetch">{error}</div>}
       {isLoading && <DataLoaderImitation />}
-      {albums &&
+      {albums.length > 0 ? (
         albums.map((e) => {
           return (
             <div className="card__item" key={e.id}>
@@ -30,17 +27,20 @@ export default function Cards() {
                 ></img>
               </div>
               <div className="card__info">
-                <CardsInfoRow title="Artist: " info={e.artist} />
-                <CardsInfoRow title="Artist: " info={e.country} />
+                <CardsInfoRow title="Artist" info={e.artist} />
+                <CardsInfoRow title="Country" info={e.country} />
                 <CardsInfoRow title="Genre" info={e.genre} />
-                <CardsInfoRow title="Release" info={e.year} />
                 <CardsInfoRow title="Album" info={e.album} />
+                <CardsInfoRow title="Release" info={e.year} />
                 <CardsInfoRow title="Tracks" info={e.tracks} />
                 <CardsInfoRow title="Rating" info={e.rating} />
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="error__message_fetch">{'No result found'}</div>
+      )}
     </div>
   );
 }
