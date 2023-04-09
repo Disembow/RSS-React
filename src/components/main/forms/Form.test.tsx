@@ -29,13 +29,15 @@ test('To have errors after input wrong names', () => {
 });
 
 test('upload file', async () => {
-  const file = new File(['hello'], 'hello.png', { type: 'image/png' });
+  const file = new File(['hello'], 'hello.jpg', { type: 'image/jpg' });
   render(<Form />);
 
-  const input = screen.getByTitle('avatar');
+  const input = screen.getByLabelText('Upload your image:');
+
   await userEvent.upload(input, file);
 
   if (input instanceof HTMLInputElement && input.files) {
+    console.log(input);
     expect(input.files[0]).toStrictEqual(file);
     expect(input.files.item(0)).toStrictEqual(file);
     expect(input.files).toHaveLength(1);
