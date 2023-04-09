@@ -17,7 +17,6 @@ export default function Cards({ albums, isLoading, error }: TCards) {
   const [card, setCard] = useState<JSX.Element>();
 
   const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    setActive(true);
     const id = e.currentTarget.id;
 
     fetch(`${API_LINK + API_CATALOG}/${id}`)
@@ -29,6 +28,7 @@ export default function Cards({ albums, isLoading, error }: TCards) {
       })
       .then((data: TAlbums) => {
         setCard(<Card data={data} clickHandler={clickHandler} />);
+        setActive(true);
       });
   };
 
