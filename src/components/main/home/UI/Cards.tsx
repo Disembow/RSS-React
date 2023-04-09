@@ -4,6 +4,7 @@ import { TAlbums } from '../../../../types/props-types';
 import DataLoaderImitation from './DataLoaderImitation';
 import Popup from './Popup';
 import Card from './Card';
+import { API_CATALOG, API_LINK } from '../../../utils/data';
 
 type TCards = {
   albums: TAlbums[];
@@ -19,7 +20,7 @@ export default function Cards({ albums, isLoading, error }: TCards) {
     setActive(true);
     const id = e.currentTarget.id;
 
-    fetch(`http://localhost:3000/catalog/${id}`)
+    fetch(`${API_LINK + API_CATALOG}/${id}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Couldn't fetch the data from that source");

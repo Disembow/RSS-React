@@ -1,6 +1,7 @@
 import React from 'react';
 import CardsInfoRow from './CardsInfoRow';
 import { TAlbums } from '../../../../types/props-types';
+import { API_LINK } from '../../../utils/data';
 
 type TCard = {
   data: TAlbums;
@@ -11,11 +12,7 @@ const Card = ({ data, clickHandler }: TCard) => {
   return (
     <div className="card__item" id={`${data.id}`} onClick={clickHandler}>
       <div className="card-image__wrapper">
-        <img
-          className="card__image"
-          src={`http://localhost:3000/${data.cover}`}
-          alt={data.album}
-        ></img>
+        <img className="card__image" src={`${API_LINK}${data.cover}`} alt={data.album}></img>
       </div>
       <div className="card__info">
         <CardsInfoRow title="Artist" info={data.artist} />

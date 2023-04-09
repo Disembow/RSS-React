@@ -1,4 +1,5 @@
 import { TAlbums } from '../../types/props-types';
+import { API_LINK, API_CATALOG } from './data';
 
 export default function fetchAPI(
   setAlbums: React.Dispatch<React.SetStateAction<TAlbums[]>>,
@@ -7,7 +8,7 @@ export default function fetchAPI(
   search?: string
 ) {
   setTimeout(() => {
-    fetch('http://localhost:3000/catalog')
+    fetch(API_LINK + API_CATALOG)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Couldn't fetch the data from that source");

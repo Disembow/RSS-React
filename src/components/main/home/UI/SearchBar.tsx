@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { TInput, TAlbums } from '../../../../types/props-types';
 import Cards from './Cards';
-import fetchAPI from '../../../utils/fetchAPIbyDefault';
+import fetchAPI from '../../../utils/fetchAPI';
 
 export default function SearchBar(props: TInput) {
   const key = 'RSTaskMessage';
