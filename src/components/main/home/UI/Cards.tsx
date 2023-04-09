@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Cards.scss';
 import { TAlbums } from '../../../../types/props-types';
-import CardsInfoRow from './CardsInfo';
 import DataLoaderImitation from './DataLoaderImitation';
+import Popup from './Popup';
+import Card from './Card';
 
 type TCards = {
   albums: TAlbums[];
@@ -11,32 +12,33 @@ type TCards = {
 };
 
 export default function Cards({ albums, isLoading, error }: TCards) {
+  const [active, setActive] = useState(false);
+  const [card, setCard] = useState<JSX.Element>();
+
+  const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+    setActive(true);
+    const id = e.currentTarget.id;
+
+    fetch(`http://localhost:3000/catalog/${id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Couldn't fetch the data from that source");
+        }
+        return res.json();
+      })
+      .then((data: TAlbums) => {
+        setCard(<Card data={data} clickHandler={clickHandler} />);
+      });
+  };
+
   return (
     <div className="cards__wrapper" data-testid="main-cards-list">
       {error && <div className="error__message_fetch">{error}</div>}
       {isLoading && <DataLoaderImitation />}
+      {active && card && <Popup setActive={setActive}>{card}</Popup>}
       {albums.length > 0 ? (
         albums.map((e) => {
-          return (
-            <div className="card__item" key={e.id}>
-              <div className="card-image__wrapper">
-                <img
-                  className="card__image"
-                  src={`http://localhost:3000/${e.cover}`}
-                  alt={e.album}
-                ></img>
-              </div>
-              <div className="card__info">
-                <CardsInfoRow title="Artist" info={e.artist} />
-                <CardsInfoRow title="Country" info={e.country} />
-                <CardsInfoRow title="Genre" info={e.genre} />
-                <CardsInfoRow title="Album" info={e.album} />
-                <CardsInfoRow title="Release" info={e.year} />
-                <CardsInfoRow title="Tracks" info={e.tracks} />
-                <CardsInfoRow title="Rating" info={e.rating} />
-              </div>
-            </div>
-          );
+          return <Card key={e.id} data={e} clickHandler={clickHandler} />;
         })
       ) : (
         <div className="error__message_fetch">{'No result found'}</div>

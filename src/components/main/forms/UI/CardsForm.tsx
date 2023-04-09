@@ -1,5 +1,5 @@
 import React from 'react';
-import CardsInfoRow from '../../home/UI/CardsInfo';
+import CardsInfoRow from '../../home/UI/CardsInfoRow';
 import { TFormCard } from '../../../../types/props-types';
 import { TImage } from '../../../../types/props-types';
 import imageDefault from '../../../../assets/image_default.webp';
