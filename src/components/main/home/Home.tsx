@@ -1,6 +1,5 @@
 import React from 'react';
 import Title from '../../header/Title';
-// import Cards from './UI/Cards';
 import './Home.scss';
 import SearchBar from './UI/SearchBar';
 

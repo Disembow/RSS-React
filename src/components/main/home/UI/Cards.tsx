@@ -27,7 +27,7 @@ export default function Cards({ albums, isLoading, error }: TCards) {
         return res.json();
       })
       .then((data: TAlbums) => {
-        setCard(<Card data={data} clickHandler={clickHandler} />);
+        setCard(<Card data={data} popup={true} clickHandler={clickHandler} />);
         setActive(true);
       });
   };
@@ -39,7 +39,7 @@ export default function Cards({ albums, isLoading, error }: TCards) {
       {active && card && <Popup setActive={setActive}>{card}</Popup>}
       {albums.length > 0 ? (
         albums.map((e) => {
-          return <Card key={e.id} data={e} clickHandler={clickHandler} />;
+          return <Card key={e.id} popup={false} data={e} clickHandler={clickHandler} />;
         })
       ) : (
         <div className="error__message_fetch">{'No result found'}</div>

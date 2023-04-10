@@ -6,9 +6,10 @@ import { API_LINK } from '../../../utils/data';
 type TCard = {
   data: TAlbums;
   clickHandler: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  popup: boolean;
 };
 
-const Card = ({ data, clickHandler }: TCard) => {
+const Card = ({ data, clickHandler, popup }: TCard) => {
   return (
     <div className="card__item" id={`${data.id}`} onClick={clickHandler}>
       <div className="card-image__wrapper">
@@ -20,8 +21,8 @@ const Card = ({ data, clickHandler }: TCard) => {
         <CardsInfoRow title="Genre" info={data.genre} />
         <CardsInfoRow title="Album" info={data.album} />
         <CardsInfoRow title="Release" info={data.year} />
-        <CardsInfoRow title="Tracks" info={data.tracks} />
-        <CardsInfoRow title="Rating" info={data.rating} />
+        {popup && <CardsInfoRow title="Tracks" info={data.tracks} />}
+        {popup && <CardsInfoRow title="Rating" info={data.rating} />}
       </div>
     </div>
   );
