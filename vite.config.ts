@@ -13,7 +13,13 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/setupTests.ts'],
     coverage: {
-      exclude: [...(configDefaults.coverage.exclude || []), 'src/main.tsx'],
+      exclude: [
+        ...(configDefaults.coverage.exclude || []),
+        'src/main.tsx',
+        'src/components/utils/data.ts',
+        'src/components/utils/fetchAPI.ts',
+        'src/types/props-types.ts',
+      ],
       all: true,
       src: ['src'],
       provider: 'c8',

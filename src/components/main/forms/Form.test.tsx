@@ -37,7 +37,6 @@ test('upload file', async () => {
   await userEvent.upload(input, file);
 
   if (input instanceof HTMLInputElement && input.files) {
-    console.log(input);
     expect(input.files[0]).toStrictEqual(file);
     expect(input.files.item(0)).toStrictEqual(file);
     expect(input.files).toHaveLength(1);
