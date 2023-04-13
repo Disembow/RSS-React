@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
+import { TForm } from '../../../types/props-types';
+import { PostServices } from '../../../types/enums';
 import Options from './UI/Options';
 import CardsForm from './UI/CardsForm';
 import CreateSumbitMessage from './UI/SubmitMessage';
 import Button from './UI/Button';
-import { TForm } from '../../../types/props-types';
 import Input from './UI/Input';
 import Radio from './UI/Radio';
 import { defaultDeliveryDate, maxDate } from '../../utils/data';
-import { PostServices } from '../../../types/enums';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { changeVisibility } from './formSlice';
+import { changeVisibility, submitFormImg, submitFormData } from './formSlice';
 
 export default function Form() {
   const {
@@ -30,9 +30,9 @@ export default function Form() {
     },
   });
 
-  const [cardImageList, setСardImageList] = useState<string[]>([]);
-  const [card, setCard] = useState<TForm[]>([]);
-  const visible = useAppSelector((state) => state.visible.visible);
+  const card = useAppSelector((state) => state.form.data);
+  const cardImageList = useAppSelector((state) => state.form.image);
+  const visible = useAppSelector((state) => state.form.visible);
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: TForm) => {
@@ -43,14 +43,11 @@ export default function Form() {
       reader.readAsDataURL(file);
       reader.onload = () => {
         const image = reader.result;
-        if (typeof image === 'string') {
-          const newState = [...cardImageList, image];
-          setСardImageList(newState);
-        }
+        if (typeof image === 'string') dispatch(submitFormImg(image));
       };
     }
 
-    setCard([...card, data]);
+    dispatch(submitFormData(data));
     dispatch(changeVisibility());
 
     reset();
@@ -157,10 +154,10 @@ export default function Form() {
           register={avatar}
           className={'input__file'}
           type={'file'}
-          id={'avatar'}
           title={'avatar'}
-          accept={'.jpg, .jpeg, .png, .gif, .bmp, .webp, .svg'}
+          id={'avatar'}
           labelText={'Upload your image:'}
+          accept={'.jpg, .jpeg, .png, .gif, .bmp, .webp, .svg'}
         />
         {errors.avatar ? <p className="error__message">{errors.avatar.message}</p> : <></>}
 

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import visibilityReduser from '../components/main/forms/formSlice';
+import formReduser from '../components/main/forms/formSlice';
 
 const store = configureStore({
   reducer: {
-    visible: visibilityReduser,
+    form: formReduser,
   },
 });
 
