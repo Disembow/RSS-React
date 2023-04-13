@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { Routes, Route } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-
+import { TestRoutes } from './types/enums';
 import App from './App';
 import Home from './components/main/home/Home';
 import Title from './components/header/Title';
@@ -18,13 +18,6 @@ describe('App', () => {
     ).toHaveTextContent('Home page');
   });
 });
-
-enum TestRoutes {
-  Home = '/',
-  NotFound = '/some/bad/route',
-  About = '/about',
-  Forms = '/forms',
-}
 
 test('Renders Page not found if user enter wrong path', () => {
   render(

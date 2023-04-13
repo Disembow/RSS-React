@@ -7,9 +7,10 @@ import Button from './UI/Button';
 import { TForm } from '../../../types/props-types';
 import Input from './UI/Input';
 import Radio from './UI/Radio';
-
-const defaultDeliveryDate = new Date().toISOString().slice(0, 10);
-const maxDate = new Date(new Date().getFullYear() + 1, new Date().getMonth(), new Date().getDate());
+import { defaultDeliveryDate, maxDate } from '../../utils/data';
+import { PostServices } from '../../../types/enums';
+import { useAppSelector, useAppDispatch } from '../../../app/hooks';
+import { changeVisibility } from './formSlice';
 
 export default function Form() {
   const {
@@ -24,13 +25,15 @@ export default function Form() {
       firstName: '',
       lastName: '',
       deliveryDate: defaultDeliveryDate,
-      postProvider: 'DHL',
+      postProvider: PostServices.DHL,
       checkbox: false,
     },
   });
 
   const [cardImageList, setСardImageList] = useState<string[]>([]);
   const [card, setCard] = useState<TForm[]>([]);
+  const visible = useAppSelector((state) => state.visible.visible);
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: TForm) => {
     const file = data.avatar[0];
@@ -48,15 +51,13 @@ export default function Form() {
     }
 
     setCard([...card, data]);
-    setVisible((prev) => !prev);
+    dispatch(changeVisibility());
 
     reset();
   };
 
-  const [visible, setVisible] = useState(false);
-
   const clickHandler = function () {
-    setVisible((prev) => !prev);
+    dispatch(changeVisibility());
   };
 
   const title = register('radio');
@@ -140,7 +141,7 @@ export default function Form() {
             Post service:
           </label>
           <select {...register('postProvider')} className="light-block" id="post-select">
-            <Options value={['DHL', 'UPS', 'DPD']} />
+            <Options value={[PostServices.DHL, PostServices.UPS, PostServices.DPD]} />
           </select>
         </div>
 

@@ -19,6 +19,7 @@ export default defineConfig({
         'src/components/utils/data.ts',
         'src/components/utils/fetchAPI.ts',
         'src/types/props-types.ts',
+        'src/types/enums.ts',
       ],
       all: true,
       src: ['src'],
