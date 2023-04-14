@@ -1,14 +1,15 @@
 @use '../../../../styles' as *;
 
 .cards__wrapper {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 17rem);
   justify-content: space-between;
-  flex-wrap: wrap;
-  // display: grid;
-  // grid-template-columns: repeat(1rf, 4);
   gap: 1rem;
   margin: 1rem 0;
+
+  @media screen and (max-width: 864px) {
+    justify-content: space-around;
+  }
 
   &_forms {
     justify-content: center;
