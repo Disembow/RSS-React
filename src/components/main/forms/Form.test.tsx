@@ -3,16 +3,26 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from './Form';
 import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
+import store from '../../../app/store';
 
 test('To have number of inputs', () => {
-  render(<Form />);
+  render(
+    <Provider store={store}>
+      <Form />
+    </Provider>
+  );
 
   const form = screen.getAllByRole('textbox');
   expect(form).to.have.length(2);
 });
 
 test('To have errors after input wrong names', () => {
-  render(<Form />);
+  render(
+    <Provider store={store}>
+      <Form />
+    </Provider>
+  );
 
   const form = screen.getAllByRole('textbox');
   const firstNameInput = form[0] as HTMLInputElement;
@@ -30,7 +40,11 @@ test('To have errors after input wrong names', () => {
 
 test('upload file', async () => {
   const file = new File(['hello'], 'hello.jpg', { type: 'image/jpg' });
-  render(<Form />);
+  render(
+    <Provider store={store}>
+      <Form />
+    </Provider>
+  );
 
   const input = screen.getByLabelText('Upload your image:');
 
