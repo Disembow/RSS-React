@@ -1,49 +1,26 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { TInput, TAlbums } from '../../../../types/props-types';
+import React, { useEffect, useRef } from 'react';
+import { TInput } from '../../../../types/props-types';
 import Cards from './Cards';
-import fetchAPI from '../../../utils/fetchAPI';
+import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
+import { fetchAlbums, submitSearch } from './searchBarSlice';
 
 export default function SearchBar(props: TInput) {
-  const key = 'RSTaskMessage';
+  const input = useAppSelector((state) => state.albums.input);
+  const albums = useAppSelector((state) => state.albums.albums);
+  const isLoading = useAppSelector((state) => state.albums.isLoading);
+  const error = useAppSelector((state) => state.albums.error);
+  const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [input, setInput] = useState(localStorage.getItem(key) || '');
-  const [albums, setAlbums] = useState<TAlbums[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<null | string>(null);
-
-  useEffect(() => {
-    fetchAPI(setAlbums, setIsLoading, setError, input);
-
-    const inputValue = inputRef.current;
-    const localData = localStorage.getItem(key);
-
-    if (localData && inputValue) {
-      setInput(localData);
-      inputValue.value = localData;
-    }
-
-    return () => {
-      if (inputValue) {
-        localStorage.setItem(key, inputValue.value);
-      }
-    };
-  }, [input]);
-
   useEffect(() => {
     inputRef.current?.focus();
-  }, []);
+    dispatch(fetchAlbums(input));
+  }, [dispatch, input]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
-    const inputValue = inputRef.current;
-    if (inputValue) setInput(inputValue.value);
-
-    setIsLoading((prev: boolean) => !prev);
-
-    fetchAPI(setAlbums, setIsLoading, setError, input);
+    if (inputRef.current) dispatch(submitSearch(inputRef.current.value));
   };
 
   return (
@@ -55,6 +32,7 @@ export default function SearchBar(props: TInput) {
           placeholder={props.placeholder}
           data-testid={props['data-testid']}
           ref={inputRef}
+          defaultValue={input}
         />
         <button type="submit" className="search__icon" data-testid="main-search-icon"></button>
       </form>
