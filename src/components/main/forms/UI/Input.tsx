@@ -18,47 +18,18 @@ type TInput = {
   title?: string;
 };
 
-export default function Input({
-  register,
-  className,
-  type,
-  value,
-  placeholder,
-  autoComplete,
-  id,
-  labelText,
-  min,
-  max,
-  defaultValue,
-  required,
-  accept,
-  title,
-}: TInput) {
+export default function Input(props: TInput) {
   return (
     <>
       <div className="form__item">
-        {labelText === '' ? (
+        {props.labelText === '' ? (
           <></>
         ) : (
-          <label className="form__label" htmlFor={id}>
-            {labelText}
+          <label className="form__label" htmlFor={props.id}>
+            {props.labelText}
           </label>
         )}
-        <input
-          {...register}
-          className={className}
-          type={type}
-          value={value}
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          min={min}
-          max={max}
-          defaultValue={defaultValue}
-          id={id}
-          required={required}
-          accept={accept}
-          title={title}
-        />
+        <input {...props.register} {...props} />
       </div>
     </>
   );
