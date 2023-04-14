@@ -50,7 +50,7 @@ export default function Form() {
     dispatch(submitFormData(data));
     dispatch(changeVisibility());
 
-    reset();
+    // reset();
   };
 
   const clickHandler = function () {
@@ -164,9 +164,8 @@ export default function Form() {
         <Button />
       </form>
 
-      <CardsForm number={cardImageList.length} logo={cardImageList} data={card}>
-        {visible ? <CreateSumbitMessage callback={clickHandler} /> : <></>}
-      </CardsForm>
+      <CardsForm number={cardImageList.length} logo={cardImageList} data={card} />
+      {visible ? <CreateSumbitMessage callback={clickHandler} /> : <></>}
     </>
   );
 }

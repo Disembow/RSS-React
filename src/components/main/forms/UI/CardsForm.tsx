@@ -46,7 +46,6 @@ export default function CardsForm(props: TFormCard) {
           }
           data-testid="email-notice"
         />
-        {props.children}
       </div>
     );
   }
