@@ -31,7 +31,11 @@ export default function SearchBar(props: TInput) {
     };
   }, [input]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     const inputValue = inputRef.current;
