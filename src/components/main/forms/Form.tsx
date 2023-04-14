@@ -50,7 +50,7 @@ export default function Form() {
     dispatch(submitFormData(data));
     dispatch(changeVisibility());
 
-    // reset();
+    reset();
   };
 
   const clickHandler = function () {
