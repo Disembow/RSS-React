@@ -37,13 +37,11 @@ export default function Cards({ albums, isLoading, error }: TCards) {
       {error && <div className="error__message_fetch">{error}</div>}
       {isLoading && <DataLoaderImitation />}
       {active && card && <Popup setActive={setActive}>{card}</Popup>}
-      {albums.length > 0 ? (
-        albums.map((e) => {
-          return <Card key={e.id} popup={false} data={e} clickHandler={clickHandler} />;
-        })
-      ) : (
-        <div className="error__message_fetch">{'No result found'}</div>
-      )}
+      {albums.length > 0
+        ? albums.map((e) => {
+            return <Card key={e.id} popup={false} data={e} clickHandler={clickHandler} />;
+          })
+        : !isLoading && <div className="error__message_fetch">{'No result found'}</div>}
     </div>
   );
 }
