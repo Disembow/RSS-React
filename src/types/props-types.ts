@@ -56,7 +56,7 @@ export type TImage = {
 export type TInput = {
   type: string;
   placeholder: string;
-  'data-testid': string;
+  'data-testid'?: string;
 };
 
 export type TForm = {

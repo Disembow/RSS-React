@@ -11,7 +11,7 @@ type TCard = {
 
 const Card = ({ data, clickHandler, popup }: TCard) => {
   return (
-    <div className="card__item" id={`${data.id}`} onClick={clickHandler}>
+    <div className="card__item" id={`${data.id}`} onClick={clickHandler} data-testid={'card-item'}>
       <div className="card-image__wrapper">
         <img className="card__image" src={`${API_LINK}${data.cover}`} alt={data.album}></img>
       </div>

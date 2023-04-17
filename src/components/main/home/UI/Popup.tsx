@@ -7,7 +7,7 @@ type TPopup = {
 
 const Popup = ({ setActive, children }: TPopup) => {
   return (
-    <div className="overlay" onClick={() => setActive(false)}>
+    <div className="overlay" data-testid="overlay" onClick={() => setActive(false)}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
