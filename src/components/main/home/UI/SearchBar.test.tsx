@@ -17,9 +17,11 @@ describe('Searchbar', () => {
 
     const cards = await screen.findAllByTestId('card-item');
     expect(cards.length).toBeGreaterThan(0);
+    expect(Number(cards[0].id)).toEqual(1);
+    expect(Number(cards[13].id)).toEqual(14);
   });
 
-  it('should render cards list contains cards', async () => {
+  it('should render popup overlay by clicking on first card', async () => {
     render(
       <Provider store={store}>
         <SearchBar
@@ -34,5 +36,23 @@ describe('Searchbar', () => {
 
     const overlay = await screen.findByTestId('overlay');
     expect(overlay).toBeInTheDocument();
+  });
+
+  it('should remove popup overlay by clicking on it', async () => {
+    render(
+      <Provider store={store}>
+        <SearchBar
+          type={'search'}
+          placeholder={'Search by artist, album, genre, country, year...'}
+        />
+      </Provider>
+    );
+
+    const cards = await screen.findAllByTestId('card-item');
+    fireEvent.click(cards[0]);
+    const overlay = await screen.findByTestId('overlay');
+    fireEvent.click(overlay);
+
+    expect(overlay).not.toBeInTheDocument();
   });
 });
