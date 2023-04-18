@@ -7,6 +7,10 @@ const store = configureStore({
     form: formReduser,
     albums: albumsReduser,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export default store;
