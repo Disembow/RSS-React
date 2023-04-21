@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { RenderToPipeableStreamOptions, renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
@@ -11,13 +11,11 @@ export function renderApp(
   opts: RenderToPipeableStreamOptions | undefined
 ) {
   const stream = renderToPipeableStream(
-    <StrictMode>
-      <Provider store={store}>
-        <StaticRouter location={url}>
-          <App />
-        </StaticRouter>
-      </Provider>
-    </StrictMode>,
+    <Provider store={store}>
+      <StaticRouter location={url}>
+        <App />
+      </StaticRouter>
+    </Provider>,
     opts
   );
   return stream;

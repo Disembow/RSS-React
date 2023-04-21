@@ -2,10 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { TAlbums } from '../../../../types/props-types';
 import { API_CATALOG, API_LINK } from '../../../utils/data';
 
-// import * as toolkitRaw from '@reduxjs/toolkit';
-// const { createSlice, createAsyncThunk } = ((toolkitRaw as any).default ??
-// toolkitRaw) as typeof toolkitRaw;
-
 type TInitialState = {
   input: string;
   albums: TAlbums[];
