@@ -15,5 +15,10 @@
     "baseUrl": "./src",
     "resolveJsonModule": true
   },
-  "include": ["vite.config.ts", "./src/**/*", "styled.d.ts"]
+  "include": ["vite.config.ts", "./src/**/*", "styled.d.ts", "server.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true
+  }
 }

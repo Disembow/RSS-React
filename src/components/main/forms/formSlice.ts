@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TForm } from '../../../types/props-types';
 
+// import * as toolkitRaw from '@reduxjs/toolkit';
+// const { createSlice } = ((toolkitRaw as any).default ?? toolkitRaw) as typeof toolkitRaw;
+
 type TInitialState = {
   data: TForm[];
   image: string[];

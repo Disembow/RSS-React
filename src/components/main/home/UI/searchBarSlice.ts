@@ -2,6 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { TAlbums } from '../../../../types/props-types';
 import { API_CATALOG, API_LINK } from '../../../utils/data';
 
+// import * as toolkitRaw from '@reduxjs/toolkit';
+// const { createSlice, createAsyncThunk } = ((toolkitRaw as any).default ??
+// toolkitRaw) as typeof toolkitRaw;
+
 type TInitialState = {
   input: string;
   albums: TAlbums[];
@@ -34,7 +38,7 @@ const searchBarSlice = createSlice({
         state.albums = action.payload;
         state.error = '';
       })
-      .addCase(fetchAlbums.rejected, (state, action) => {
+      .addCase(fetchAlbums.rejected, (state) => {
         state.isLoading = false;
         state.albums = [];
         state.error = "Couldn't fetch the data from that source";
