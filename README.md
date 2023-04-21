@@ -7,3 +7,4 @@ RSS React course
 3. [Hooks](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module03)
 4. [API](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module04)
 5. [Redux](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module05)
+6. [SSR](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module06)

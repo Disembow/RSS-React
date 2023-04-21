@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const HTMLPath = path.resolve(__dirname, './index.html');
 
 const PORT = process.env.PORT || 666;
 
@@ -20,22 +21,22 @@ async function createServer() {
 
   app.use('*', async (req, res, next) => {
     try {
-      const readedHTML = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8');
+      const readedHTML = fs.readFileSync(HTMLPath, 'utf-8');
       const html = await vite.transformIndexHtml(req.originalUrl, readedHTML);
-      const parts = html.split('<!--ssr-outlet-->');
+      const [part1, part2] = html.split('<!--ssr-outlet-->');
 
       const { renderApp } = await vite.ssrLoadModule('./src/entry-server.tsx');
 
       const stream = renderApp(req.originalUrl, {
         onShellReady() {
-          res.write(parts[0]);
+          res.write(part1);
           stream.pipe(res);
         },
         onShellError(err: unknown) {
           if (err instanceof Error) console.error(err);
         },
         onAllReady() {
-          res.write(parts[1]);
+          res.write(part2);
           res.end();
         },
         onError(err: unknown) {
