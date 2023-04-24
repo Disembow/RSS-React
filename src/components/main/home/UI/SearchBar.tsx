@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { TInput } from '../../../../types/props-types';
 import Cards from './Cards';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import { fetchAlbums, submitSearch } from './searchBarSlice';
+import DataLoaderImitation from './DataLoaderImitation';
 
 export default function SearchBar(props: TInput) {
   const input = useAppSelector((state) => state.albums.input);
@@ -36,7 +37,9 @@ export default function SearchBar(props: TInput) {
         />
         <button type="submit" className="search__icon" data-testid="main-search-icon"></button>
       </form>
-      <Cards albums={albums} isLoading={isLoading} error={error} />
+      <Suspense fallback={<DataLoaderImitation />}>
+        <Cards albums={albums} isLoading={isLoading} error={error} />
+      </Suspense>
     </>
   );
 }
