@@ -20,4 +20,5 @@ export default defineConfig({
       reporter: ['text'],
     },
   },
+  server: { port: 666 },
 });
