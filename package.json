@@ -10,6 +10,7 @@
     "start": "ts-node server.ts",
     "test:cy": "start-server-and-test start http://localhost:666 cypress",
     "cypress": "cypress open",
+    "coverage:cy": "npx cypress run --e2e && npx nyc report --reporter=text-summary",
     "run": "cypress run --env coverage=false",
     "cover": "cypress run --env coverage=true",
     "dev": "vite --port 8000 --open",
@@ -21,6 +22,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "nyc": "^15.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -42,6 +44,7 @@
     "@typescript-eslint/parser": "^5.55.0",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/coverage-c8": "^0.29.3",
+    "babel-plugin-istanbul": "^6.1.1",
     "cypress": "^12.10.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",

@@ -6,7 +6,7 @@ import Form from './Form';
 export default function FormPage() {
   return (
     <>
-      <Title>{'Forms page'}</Title>
+      <Title>{'Form page'}</Title>
       <Form />
     </>
   );

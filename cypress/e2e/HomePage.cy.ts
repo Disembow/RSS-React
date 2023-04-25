@@ -3,10 +3,10 @@ describe('Home page', () => {
     cy.visit('/');
   });
 
-  it('finds the navigation links', () => {
+  it('finds and navigates through header links', () => {
     cy.contains('Home');
-    cy.contains('About');
-    cy.contains('Form');
+    cy.contains('About').click().url().should('equal', 'http://localhost:666/about');
+    cy.contains('Form').click().url().should('equal', 'http://localhost:666/forms');
   });
 
   it('has page name', () => {
@@ -39,10 +39,36 @@ describe('Home page', () => {
       .contains(/about us/i)
       .click()
       .get('h1')
-      .should('have.text', /about/i);
+      .should('have.text', 'About');
   });
 
-  it('', () => {});
+  it('navigates to Form page by clicking on the link', () => {
+    cy.get('.navigation__item')
+      .contains(/form/i)
+      .click()
+      .get('h1')
+      .should('have.text', 'Form page');
+  });
 
-  it('', () => {});
+  it('navigates to 404 page in case of wrong path', () => {
+    cy.visit('/wrong-path-to-page').get('h1').should('have.text', 'Page not found :(');
+  });
+
+  it('should open modal window by clicking on card', () => {
+    const randomNumber = Math.trunc(Math.random() * 70 + 1);
+    cy.get(`#${randomNumber}`).click().get('.overlay').should('be.visible');
+
+    cy.get('.overlay').click(0, 0).should('not.exist');
+  });
+
+  it('should redirect to github by clicking on its icon located in footer', () => {
+    cy.get('.footer__github').click().url().should('equal', 'https://github.com/Disembow');
+  });
+
+  it('should redirect to RS School by clicking on its icon located in footer', () => {
+    cy.get('.footer__rss')
+      .click()
+      .url()
+      .should('equal', 'https://app.rs.school/registry/student?course=react-2023-q1');
+  });
 });
