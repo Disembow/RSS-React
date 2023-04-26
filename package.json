@@ -9,15 +9,15 @@
   "scripts": {
     "start": "ts-node server.ts",
     "cy:start-e2e": "start-server-and-test start http://localhost:666 cy:open-e2e",
-    "cy:run-e2e": "cypress run --e2e",
+    "cy:run-e2e": "cypress run --e2e cy:coverage",
     "cy:open-e2e": "cypress open --e2e --browser chrome",
     "cy:coverage": "npx nyc report --reporter=text-summary",
     "dev": "vite --port 8000 --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --fix . --ext .ts,.tsx",
-    "test:unit": "vitest",
-    "coverage:unit": "vitest run --coverage"
+    "unit:test": "vitest",
+    "unit:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
