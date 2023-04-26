@@ -5,9 +5,17 @@ import { defineConfig } from 'vite';
 import { configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
+import istanbul from 'vite-plugin-istanbul';
 
 export default defineConfig({
-  plugins: [react(), eslint()],
+  plugins: [
+    react(),
+    eslint(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
@@ -20,5 +28,8 @@ export default defineConfig({
       reporter: ['text'],
     },
   },
-  server: { port: 666 },
+  server: {
+    port: 666,
+    host: true,
+  },
 });

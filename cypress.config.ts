@@ -2,13 +2,12 @@ import { defineConfig } from 'cypress';
 import codeCoverageTasks from '@cypress/code-coverage/task';
 
 export default defineConfig({
-  video: false,
-  chromeWebSecurity: false,
-  env: {
-    codeCoverage: {
-      exclude: 'cypress/**/*.*',
-    },
-  },
+  // env: {
+  //   codeCoverage: {
+  //     exclude: 'cypress/**/*.*',
+  //   },
+  // },
+
   e2e: {
     baseUrl: 'http://localhost:666',
     setupNodeEvents(on, config) {
@@ -16,4 +15,7 @@ export default defineConfig({
       return config;
     },
   },
+
+  video: false,
+  chromeWebSecurity: false,
 });

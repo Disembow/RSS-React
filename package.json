@@ -8,21 +8,19 @@
   "license": "ISC",
   "scripts": {
     "start": "ts-node server.ts",
-    "test:cy": "start-server-and-test start http://localhost:666 cypress",
-    "cypress": "cypress open",
-    "coverage:cy": "npx cypress run --e2e && npx nyc report --reporter=text-summary",
-    "run": "cypress run --env coverage=false",
-    "cover": "cypress run --env coverage=true",
+    "cy:start-e2e": "start-server-and-test start http://localhost:666 cy:open-e2e",
+    "cy:run-e2e": "cypress run --e2e",
+    "cy:open-e2e": "cypress open --e2e --browser chrome",
+    "cy:coverage": "npx nyc report --reporter=text-summary",
     "dev": "vite --port 8000 --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --fix . --ext .ts,.tsx",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test:unit": "vitest",
+    "coverage:unit": "vitest run --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
-    "nyc": "^15.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -32,6 +30,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.4",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
@@ -56,8 +55,10 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "express": "^4.18.2",
     "husky": "^8.0.3",
+    "istanbul-lib-coverage": "^3.2.0",
     "jsdom": "^21.1.1",
     "lint-staged": "^13.2.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.8.4",
     "react-hook-form": "^7.43.8",
     "react-test-renderer": "^18.2.0",
@@ -66,6 +67,7 @@
     "typescript": "^4.9.3",
     "vite": "^4.2.0",
     "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-istanbul": "^4.0.1",
     "vitest": "^0.29.3"
   }
 }

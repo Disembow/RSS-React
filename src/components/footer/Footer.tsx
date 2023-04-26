@@ -9,10 +9,7 @@ export default function Footer() {
           {' '}
         </a>
         <div className="footer__year">2023</div>
-        <a
-          className="footer__rss"
-          href="https://app.rs.school/registry/student?course=react-2023-q1"
-        >
+        <a className="footer__rss" href="https://rs.school/react/">
           {' '}
         </a>
       </footer>

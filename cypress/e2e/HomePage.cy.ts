@@ -6,6 +6,7 @@ describe('Home page', () => {
   it('finds and navigates through header links', () => {
     cy.contains('Home');
     cy.contains('About').click().url().should('equal', 'http://localhost:666/about');
+    cy.visit('/');
     cy.contains('Form').click().url().should('equal', 'http://localhost:666/forms');
   });
 
@@ -66,9 +67,6 @@ describe('Home page', () => {
   });
 
   it('should redirect to RS School by clicking on its icon located in footer', () => {
-    cy.get('.footer__rss')
-      .click()
-      .url()
-      .should('equal', 'https://app.rs.school/registry/student?course=react-2023-q1');
+    cy.get('.footer__rss').click().url().should('equal', 'https://rs.school/react/');
   });
 });
