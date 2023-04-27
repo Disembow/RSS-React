@@ -92,7 +92,7 @@ export default function Form() {
     <>
       <form className="order__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form__item form__item_radio">
-          <label className="form__label" htmlFor={'first-name'}>
+          <label className="form__label" htmlFor={'gender'}>
             How to address you:
           </label>
           <Radio register={title} className="form__checkbox" type="radio" value="Mr." id="gender" />
