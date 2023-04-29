@@ -7,6 +7,7 @@ type TInitialState = {
   albums: TAlbums[];
   albumsCount: number;
   currentPage: number;
+  albumsPerPage: number;
   isLoading: boolean;
   error: string;
 };
@@ -16,6 +17,7 @@ const initialState: TInitialState = {
   albums: [],
   albumsCount: 0,
   currentPage: 1,
+  albumsPerPage: ALBUMS_PER_PAGE,
   isLoading: false,
   error: '',
 };
@@ -29,6 +31,9 @@ const searchBarSlice = createSlice({
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
+    },
+    setAlbumsPerPage: (state, action) => {
+      state.albumsPerPage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -51,12 +56,12 @@ const searchBarSlice = createSlice({
   },
 });
 
-export const fetchAlbums = createAsyncThunk<[TAlbums[], number], [string, number]>(
+export const fetchAlbums = createAsyncThunk<[TAlbums[], number], [string, number, number]>(
   'searchbar/fetchAlbums',
-  async ([search, page], { rejectWithValue }) => {
+  async ([search, page, albumsPerPage], { rejectWithValue }) => {
     if (!search || search === '') {
       const response = await fetch(
-        API_LINK + API_CATALOG + `?_limit=${ALBUMS_PER_PAGE}&_page=${page}`
+        API_LINK + API_CATALOG + `?_limit=${albumsPerPage}&_page=${page}`
       );
 
       if (!response.ok) {
@@ -91,4 +96,4 @@ export const fetchAlbums = createAsyncThunk<[TAlbums[], number], [string, number
 );
 
 export default searchBarSlice.reducer;
-export const { submitSearch, setCurrentPage } = searchBarSlice.actions;
+export const { submitSearch, setCurrentPage, setAlbumsPerPage } = searchBarSlice.actions;

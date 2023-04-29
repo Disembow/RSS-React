@@ -9,6 +9,7 @@ export default function SearchBar(props: TInput) {
   const input = useAppSelector((state) => state.albums.input);
   const albums = useAppSelector((state) => state.albums.albums);
   const currentPage = useAppSelector((state) => state.albums.currentPage);
+  const albumsPerPage = useAppSelector((state) => state.albums.albumsPerPage);
   const isLoading = useAppSelector((state) => state.albums.isLoading);
   const error = useAppSelector((state) => state.albums.error);
   const dispatch = useAppDispatch();
@@ -17,8 +18,8 @@ export default function SearchBar(props: TInput) {
 
   useEffect(() => {
     inputRef.current?.focus();
-    dispatch(fetchAlbums([input, currentPage]));
-  }, [dispatch, input, currentPage]);
+    dispatch(fetchAlbums([input, currentPage, albumsPerPage]));
+  }, [dispatch, input, currentPage, albumsPerPage]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

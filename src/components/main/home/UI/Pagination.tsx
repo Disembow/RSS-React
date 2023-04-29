@@ -1,15 +1,17 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import './Pagination.scss';
-import { ALBUMS_PER_PAGE } from '../../../utils/data';
 import { setCurrentPage } from './searchBarSlice';
+import PaginationSelect from './PaginationSelect';
 
 const Pagination = () => {
   const dispatch = useAppDispatch();
 
-  const numberOfPages = Math.ceil(
-    useAppSelector((state) => state.albums.albumsCount) / ALBUMS_PER_PAGE
-  );
+  const albumsCount = useAppSelector((state) => state.albums.albumsCount);
+  const albumsPerPage = useAppSelector((state) => state.albums.albumsPerPage);
+  const currentPage = useAppSelector((state) => state.albums.currentPage);
+
+  const numberOfPages = Math.ceil(albumsCount / albumsPerPage);
 
   const pageNumbers: number[] = [];
 
@@ -19,16 +21,25 @@ const Pagination = () => {
 
   const clickHandler = (e: React.MouseEvent) => {
     dispatch(setCurrentPage(e.currentTarget.id.split('-')[1]));
+    console.log(+e.currentTarget.id.split('-')[1]);
   };
 
   return (
-    <nav className="page-numbers__container">
-      {pageNumbers.map((num) => (
-        <div className="page-number" key={num} id={`page-${num.toString()}`} onClick={clickHandler}>
-          {num}
-        </div>
-      ))}
-    </nav>
+    <div className="pagination">
+      <nav className="page-numbers__container">
+        {pageNumbers.map((num) => (
+          <div
+            className={+currentPage === num ? 'page-number page-number__active' : 'page-number'}
+            key={num}
+            id={`page-${num.toString()}`}
+            onClick={clickHandler}
+          >
+            {num}
+          </div>
+        ))}
+      </nav>
+      <PaginationSelect />
+    </div>
   );
 };
 
