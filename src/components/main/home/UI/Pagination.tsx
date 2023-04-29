@@ -18,13 +18,13 @@ const Pagination = () => {
   }
 
   const clickHandler = (e: React.MouseEvent) => {
-    dispatch(setCurrentPage(e.currentTarget.id));
+    dispatch(setCurrentPage(e.currentTarget.id.split('-')[1]));
   };
 
   return (
     <nav className="page-numbers__container">
       {pageNumbers.map((num) => (
-        <div className="page-number" key={num} id={num.toString()} onClick={clickHandler}>
+        <div className="page-number" key={num} id={`page-${num.toString()}`} onClick={clickHandler}>
           {num}
         </div>
       ))}

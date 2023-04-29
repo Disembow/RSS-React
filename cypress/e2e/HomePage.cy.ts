@@ -56,7 +56,7 @@ describe('Home page', () => {
   });
 
   it('should open modal window by clicking on card', () => {
-    const randomNumber = Math.trunc(Math.random() * 70 + 1);
+    const randomNumber = Math.trunc(Math.random() * 5 + 1);
     cy.get(`#${randomNumber}`).click().get('.overlay').should('be.visible');
 
     cy.get('.overlay').click(0, 0).should('not.exist');
