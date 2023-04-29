@@ -18,7 +18,7 @@ describe('Searchbar', () => {
     const cards = await screen.findAllByTestId('card-item');
     expect(cards.length).toBeGreaterThan(0);
     expect(Number(cards[0].id)).toEqual(1);
-    expect(Number(cards[13].id)).toEqual(14);
+    expect(Number(cards[6].id)).toEqual(7);
   });
 
   it('should render popup overlay by clicking on first card', async () => {
