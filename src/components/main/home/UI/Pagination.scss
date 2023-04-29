@@ -1,0 +1,39 @@
+@use '../../../../styles' as *;
+
+.page-numbers__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0.5rem 0;
+  user-select: none;
+}
+
+.page-number {
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  padding: 0.3rem 0;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid $borderColor1;
+  background: $backgroundcColor1;
+  background-color: #f4f8ec;
+  color: $primaryColor1;
+  transition: linear 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    transition: linear 0.1s;
+    transform: scale(1.03);
+    font-weight: 700;
+    box-shadow: 0 0 10px 5px #dddddd;
+    background: $backgroundcColor1Hover;
+  }
+
+  &:active {
+    background: $backgroundcColor1Active;
+    transition: linear 0.1s;
+  }
+}

@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { TAlbums } from '../../../../types/props-types';
-import { API_CATALOG, API_LINK } from '../../../utils/data';
+import { ALBUMS_PER_PAGE, API_CATALOG, API_LINK } from '../../../utils/data';
 
 type TInitialState = {
   input: string;
   albums: TAlbums[];
+  albumsCount: number;
+  currentPage: number;
   isLoading: boolean;
   error: string;
 };
@@ -12,6 +14,8 @@ type TInitialState = {
 const initialState: TInitialState = {
   input: '',
   albums: [],
+  albumsCount: 0,
+  currentPage: 1,
   isLoading: false,
   error: '',
 };
@@ -23,6 +27,9 @@ const searchBarSlice = createSlice({
     submitSearch: (state, action) => {
       state.input = action.payload;
     },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -31,7 +38,9 @@ const searchBarSlice = createSlice({
       })
       .addCase(fetchAlbums.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.albums = action.payload;
+        const [data, count] = action.payload;
+        state.albums = data;
+        state.albumsCount = count;
         state.error = '';
       })
       .addCase(fetchAlbums.rejected, (state) => {
@@ -42,31 +51,44 @@ const searchBarSlice = createSlice({
   },
 });
 
-export const fetchAlbums = createAsyncThunk<TAlbums[], string>(
+export const fetchAlbums = createAsyncThunk<[TAlbums[], number], [string, number]>(
   'searchbar/fetchAlbums',
-  async (search, { rejectWithValue }) => {
-    const response = await fetch(API_LINK + API_CATALOG);
-
-    if (!response.ok) {
-      return rejectWithValue("Couldn't fetch the data from that source");
-    }
-
-    const data = await response.json();
-
-    if (!search || search === '') return data;
-
-    return data.filter((album: TAlbums) => {
-      return (
-        album &&
-        (album.artist.toLowerCase().includes(search.toLowerCase()) ||
-          album.album.toLowerCase().includes(search.toLowerCase()) ||
-          album.genre.toLowerCase().includes(search.toLowerCase()) ||
-          album.country.toLowerCase().includes(search.toLowerCase()) ||
-          album.year.toString().includes(search))
+  async ([search, page], { rejectWithValue }) => {
+    if (!search || search === '') {
+      const response = await fetch(
+        API_LINK + API_CATALOG + `?_limit=${ALBUMS_PER_PAGE}&_page=${page}`
       );
-    });
+
+      if (!response.ok) {
+        return rejectWithValue("Couldn't fetch the data from that source");
+      }
+
+      const albumCount = Number(response.headers.get('X-Total-Count'));
+      const data: TAlbums[] = await response.json();
+      return [data, albumCount];
+    } else {
+      const response = await fetch(API_LINK + API_CATALOG);
+
+      if (!response.ok) {
+        return rejectWithValue("Couldn't fetch the data from that source");
+      }
+
+      const data = await response.json();
+      const result: TAlbums[] = data.filter((album: TAlbums) => {
+        return (
+          album &&
+          (album.artist.toLowerCase().includes(search.toLowerCase()) ||
+            album.album.toLowerCase().includes(search.toLowerCase()) ||
+            album.genre.toLowerCase().includes(search.toLowerCase()) ||
+            album.country.toLowerCase().includes(search.toLowerCase()) ||
+            album.year.toString().includes(search))
+        );
+      });
+
+      return [result, result.length];
+    }
   }
 );
 
 export default searchBarSlice.reducer;
-export const { submitSearch } = searchBarSlice.actions;
+export const { submitSearch, setCurrentPage } = searchBarSlice.actions;

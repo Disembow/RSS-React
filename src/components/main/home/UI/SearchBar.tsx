@@ -3,10 +3,12 @@ import { TInput } from '../../../../types/props-types';
 import Cards from './Cards';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import { fetchAlbums, submitSearch } from './searchBarSlice';
+import Pagination from './Pagination';
 
 export default function SearchBar(props: TInput) {
   const input = useAppSelector((state) => state.albums.input);
   const albums = useAppSelector((state) => state.albums.albums);
+  const currentPage = useAppSelector((state) => state.albums.currentPage);
   const isLoading = useAppSelector((state) => state.albums.isLoading);
   const error = useAppSelector((state) => state.albums.error);
   const dispatch = useAppDispatch();
@@ -15,8 +17,8 @@ export default function SearchBar(props: TInput) {
 
   useEffect(() => {
     inputRef.current?.focus();
-    dispatch(fetchAlbums(input));
-  }, [dispatch, input]);
+    dispatch(fetchAlbums([input, currentPage]));
+  }, [dispatch, input, currentPage]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -36,6 +38,7 @@ export default function SearchBar(props: TInput) {
         />
         <button type="submit" className="search__icon" data-testid="main-search-icon"></button>
       </form>
+      <Pagination />
       <Cards albums={albums} isLoading={isLoading} error={error} />
     </>
   );
