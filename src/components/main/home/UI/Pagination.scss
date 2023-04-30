@@ -1,0 +1,84 @@
+@use '../../../../styles' as *;
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+.page-numbers__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  user-select: none;
+}
+
+.page-number {
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.3rem;
+  padding: 0.3rem 0;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid $borderColor1;
+  background: $backgroundcColor1;
+  background-color: $backgroundcColor1;
+  color: $primaryColor1;
+  transition: linear 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    transition: linear 0.1s;
+    transform: scale(1.03);
+    font-weight: 700;
+    box-shadow: 0 0 10px 5px #dddddd;
+    background: $backgroundcColor1Hover;
+  }
+
+  &:active {
+    background: $backgroundcColor1Active;
+    transition: linear 0.1s;
+  }
+
+  &__active {
+    background: $backgroundcColor1Active;
+    font-weight: 600;
+  }
+}
+
+.items-per-page {
+  font: inherit;
+  font-size: 1rem;
+  line-height: 150%;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 3.5rem;
+  height: 2rem;
+  border: solid 1px $borderColor1;
+  border-radius: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+
+  &:focus {
+    background-color: $backgroundcColor1;
+    box-shadow: 0 0 10px 5px #dddddd;
+  }
+
+  &:not([multiple]) {
+    padding-right: 0.9rem;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.5rem) 0.8rem;
+    background-size: 0.5rem auto;
+    background-image: url('../../../../assets/arrow-down.svg');
+  }
+
+  &::after {
+    content: 'a';
+  }
+}
